@@ -272,9 +272,5 @@ monitorable = false
 position = Vector2(12, -9)
 shape = SubResource("RectangleShape2D_cvnsp")
 
-[node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.5
-
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
-[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
