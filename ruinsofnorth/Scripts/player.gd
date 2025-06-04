@@ -8,7 +8,8 @@ enum PlayerState {
 	IDLE,
 	JUMP,
 	DASH,
-	RUN
+	RUN,
+	ATTACK
 }
 
 var current_State
@@ -40,25 +41,14 @@ func _physics_process(delta: float) -> void:
 		direction = active_direction
 		SPEED *= 1.5
 		velocity.x = direction * SPEED
-
-	# Flip the Sprite
+		
+		# Flip the Sprite
 	if direction > 0:
 		animated_sprite.flip_h = false
 	elif direction < 0:
 		animated_sprite.flip_h = true
 	
-	# Play Animations based on the current_state
-	if is_on_floor():
-		if current_State == PlayerState.IDLE:
-			animated_sprite.play("idle")
-		elif current_State == PlayerState.DASH:
-			animated_sprite.play("dash")
-		elif current_State == PlayerState.RUN:
-			animated_sprite.play("run")
-	elif current_State == PlayerState.JUMP:
-		animated_sprite.play("jump")
-	
-	# Apply Movement
+		# Apply Movement
 	if current_State != PlayerState.DASH:
 		if direction:
 			if is_on_floor():
@@ -69,8 +59,44 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+		
+	# Handle attack input
+	if Input.is_action_just_pressed("attack") and is_on_floor():
+		current_State = PlayerState.ATTACK
+		animated_sprite.play("attack")
+		$AttackArea.monitoring = true
+		
+
+
+# Reset state after attack (for delay purposes)
+func _on_AnimatedSprite2D_animation_finished() -> void:
+	if current_State == PlayerState.ATTACK:
+		current_State == PlayerState.IDLE
+		$AttackArea.monitoring = false
+	
+	
+	# Play Animations based on the current_state
+	if is_on_floor():
+		if current_State == PlayerState.IDLE:
+			animated_sprite.play("idle")
+		elif current_State == PlayerState.DASH:
+			animated_sprite.play("dash")
+		elif current_State == PlayerState.RUN:
+			animated_sprite.play("run")
+	elif current_State == PlayerState.ATTACK:
+		animated_sprite.play("attack")
+	elif current_State == PlayerState.JUMP:
+		animated_sprite.play("jump")
+	
+
 
 #After dash is complete reseting speed back to base speed and ending dash
 func _on_dash_timer_timeout() -> void:
 	current_State = PlayerState.IDLE
 	SPEED = 130.0
+
+# This is basically signal to detect collision for attack sprite. 
+# I opened up a new group called "enemies" for the slime and future mobs.
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if current_State == PlayerState.ATTACK and body.is_in_group("enemies"):
+		body.queue_free()  # or play a death animation
