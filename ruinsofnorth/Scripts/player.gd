@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 			animated_sprite.play("dash")
 		elif current_State == PlayerState.RUN:
 			animated_sprite.play("run")
-	elif current_State == PlayerState.JUMP: #still a little scuffed
+	elif current_State == PlayerState.JUMP:
 		animated_sprite.play("jump")
 	
 	# Apply Movement
