@@ -241,7 +241,7 @@ script = ExtResource("1_cvnsp")
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
 animation = &"dash"
-frame_progress = 0.244222
+frame_progress = 0.758363
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
