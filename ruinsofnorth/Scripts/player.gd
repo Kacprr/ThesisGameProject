@@ -9,7 +9,6 @@ enum PlayerState {
 	JUMP,
 	DASH,
 	RUN,
-	ATTACK
 }
 
 var current_State
@@ -17,6 +16,7 @@ var current_State
 var gravitiy = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var attack_scene = preload("res://scenes/Attack.tscn")
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -60,11 +60,6 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 		
-	# Handle attack input
-	if Input.is_action_just_pressed("attack"):
-		current_State = PlayerState.ATTACK
-		$AttackTimer.start()
-		$AttackArea.monitoring = true
 
 	# Play Animations based on the current_state
 	if is_on_floor():
@@ -74,24 +69,27 @@ func _physics_process(delta: float) -> void:
 			animated_sprite.play("dash")
 		elif current_State == PlayerState.RUN:
 			animated_sprite.play("run")
-		elif current_State == PlayerState.ATTACK:
-			animated_sprite.play("attack")
 	elif current_State == PlayerState.JUMP:
 		animated_sprite.play("jump")
 	
+
+func _unhandled_input(event):
+	if event.is_action_pressed("attack"):
+		spawn_attack()
+
+func spawn_attack():
+	var attack = attack_scene.instantiate()
+	
+	# Flip position based on facing direction
+	var offset = Vector2(20, 0)
+	if animated_sprite.flip_h:
+		offset.x *= -1
+	
+	attack.global_position = global_position + offset
+	get_tree().current_scene.add_child(attack)
+
 
 #After dash is complete reseting speed back to base speed and ending dash
 func _on_dash_timer_timeout() -> void:
 	current_State = PlayerState.IDLE
 	SPEED = 130.0
-
-# This is basically signal to detect collision for attack sprite. 
-# I opened up a new group called "enemies" for the slime and future mobs.
-func _on_attack_area_body_entered(body: Node2D) -> void:
-	if current_State == PlayerState.ATTACK and body.is_in_group("enemies"):
-		body.free()  # or play a death animation
-		print("attack connected")
-
-func _on_attack_timer_timeout() -> void:
-	current_State = PlayerState.IDLE
-	$AttackArea.monitorable = false

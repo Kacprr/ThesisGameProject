@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=17 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bsyig1fuq53cg" path="res://Scenes/killzone.tscn" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://0bhe4t211pey" path="res://Scenes/slime.tscn" id="6_i6g32"]
 [ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="7_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://dd6tpven8pkht" path="res://Scenes/debug_enemy.tscn" id="10_ldgsr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -312,3 +313,6 @@ theme_override_colors/font_color = Color(2.18995e-06, 0.525056, 0.234133, 1)
 theme_override_fonts/font = ExtResource("7_1l0tm")
 theme_override_font_sizes/font_size = 8
 text = "You Finished! "
+
+[node name="debugenemy" parent="." instance=ExtResource("10_ldgsr")]
+position = Vector2(-75, 29)

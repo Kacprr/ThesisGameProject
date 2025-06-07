@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxc8nv0h75mpa"]
+
+[ext_resource type="Script" uid="uid://c4c00gdg1eu4u" path="res://Scripts/attack.gd" id="1_ij4ji"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hcfh"]
+size = Vector2(9.5, 10)
+
+[node name="Node2D" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_ij4ji")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_2hcfh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -5.0
+offset_top = -4.0
+offset_right = 5.0
+offset_bottom = 6.0
+color = Color(0.824009, 0, 0.160106, 1)

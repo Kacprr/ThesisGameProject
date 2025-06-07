@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cqeg14x8abmtp"]
+[gd_scene load_steps=35 format=3 uid="uid://cqeg14x8abmtp"]
 
 [ext_resource type="Script" uid="uid://bqtam2anigymj" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://dxq3j2e2w0rg7" path="res://Assets/sprites/knight.png" id="1_v0iea"]
@@ -244,9 +244,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_3smsa"]
 radius = 5.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(12, 18)
-
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 collision_layer = 2
@@ -264,17 +261,4 @@ shape = SubResource("CircleShape2D_3smsa")
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="AttackArea" type="Area2D" parent="."]
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(12, -9)
-shape = SubResource("RectangleShape2D_cvnsp")
-
-[node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.5
-
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
-[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
-[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
