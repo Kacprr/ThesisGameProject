@@ -244,15 +244,15 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_3smsa"]
 radius = 5.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 5
-collision_layer = 2
+collision_mask = 30
 script = ExtResource("1_cvnsp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
-animation = &"dash"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
@@ -261,4 +261,9 @@ shape = SubResource("CircleShape2D_3smsa")
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.5
 
+[node name="InvulnTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="InvulnTimer" to="." method="_on_invuln_timer_timeout"]

@@ -168,7 +168,8 @@ texture = ExtResource("2_qxrlw")
 2:4/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_3dryh"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_wrm1d")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i6g32"]
@@ -315,4 +316,5 @@ theme_override_font_sizes/font_size = 8
 text = "You Finished! "
 
 [node name="debugenemy" parent="." instance=ExtResource("10_ldgsr")]
-position = Vector2(-75, 29)
+position = Vector2(68, 43)
+collision_layer = 2

@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 var SPEED = 130.0
 const JUMP_VELOCITY = -300.0
+var health = 5
+var is_invulnerable = false
 
 #enumeration used to track the current state, makes it easier to play animations
 enum PlayerState {
@@ -13,17 +15,23 @@ enum PlayerState {
 
 var current_State
 
-var gravitiy = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_scene = preload("res://scenes/Attack.tscn")
 
-func _physics_process(delta: float) -> void:
+
+func _ready():
+	add_to_group("Player")
+
+
+func _physics_process(_delta: float) -> void:
 	# Add the gravity.
 	if !is_on_floor():
 		current_State = PlayerState.JUMP
 		SPEED = 130
-		velocity += get_gravity() * delta
+		velocity.y += gravity * _delta
+
 
 	# Get the input direction: -1, 0 ,1
 	var direction := Input.get_axis("move_left", "move_right")
@@ -93,3 +101,31 @@ func spawn_attack():
 func _on_dash_timer_timeout() -> void:
 	current_State = PlayerState.IDLE
 	SPEED = 130.0
+
+func die():
+	print("You died!")
+	get_tree().call_deferred("reload_current_scene")
+
+
+func take_damage(amount, knockback = Vector2.ZERO):
+	if is_invulnerable:
+		return
+	
+	health -= amount
+	print("Player took damage. Health: ", health)
+
+	is_invulnerable = true
+	modulate = Color(1, 0.5, 0.5) # Red tint
+	$InvulnTimer.start()
+
+	# Apply knockback
+	if knockback != Vector2.ZERO:
+		velocity += knockback
+
+	if health <= 0:
+		die()
+
+
+func _on_invuln_timer_timeout() -> void:
+	is_invulnerable = false
+	modulate = Color(1, 1, 1) # Reset tint
