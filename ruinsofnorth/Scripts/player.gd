@@ -87,11 +87,11 @@ func _unhandled_input(event):
 
 func spawn_attack():
 	var attack = attack_scene.instantiate()
-	
 	# Flip position based on facing direction
-	var offset = Vector2(20, 0)
+	var offset = Vector2(15, -5)
 	if animated_sprite.flip_h:
 		offset.x *= -1
+		attack.set_flip()
 	
 	attack.global_position = global_position + offset
 	get_tree().current_scene.add_child(attack)
