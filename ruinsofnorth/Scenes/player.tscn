@@ -242,7 +242,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3smsa"]
-radius = 5.0
+radius = 6.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 5
@@ -255,7 +255,7 @@ sprite_frames = SubResource("SpriteFrames_x3wgy")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5)
+position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_3smsa")
 
 [node name="DashTimer" type="Timer" parent="."]
