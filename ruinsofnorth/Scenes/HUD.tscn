@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck3pxjp1rj2is"]
+
+[ext_resource type="Script" uid="uid://n5x6wv4ccpnl" path="res://Scripts/hud.gd" id="1_sd512"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_sd512")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+modulate = Color(1, 0.0509804, 0, 1)
+offset_right = 244.0
+offset_bottom = 14.0
+max_value = 5.0
+step = 1.0
+value = 5.0
+show_percentage = false

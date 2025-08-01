@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=17 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dnow1mg0tp1c5" path="res://Assets/sprites/world_tileset.png" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://rsp58sktc00u" path="res://Scenes/platform.tscn" id="2_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dtrix88v5hmr5" path="res://Scenes/coin.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://ck3pxjp1rj2is" path="res://Scenes/HUD.tscn" id="4_ldgsr"]
 [ext_resource type="PackedScene" uid="uid://bsyig1fuq53cg" path="res://Scenes/killzone.tscn" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://0bhe4t211pey" path="res://Scenes/slime.tscn" id="6_i6g32"]
 [ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="7_1l0tm"]
@@ -230,6 +231,8 @@ text = "You collected
 X coins."
 horizontal_alignment = 1
 
+[node name="HUD" parent="." instance=ExtResource("4_ldgsr")]
+
 [node name="TileMapLayers" type="TileMapLayer" parent="."]
 position = Vector2(-1, 0)
 tile_set = SubResource("TileSet_3dryh")
@@ -316,3 +319,6 @@ theme_override_colors/font_color = Color(2.18995e-06, 0.525056, 0.234133, 1)
 theme_override_fonts/font = ExtResource("7_1l0tm")
 theme_override_font_sizes/font_size = 8
 text = "You Finished! "
+
+[connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
+[connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]

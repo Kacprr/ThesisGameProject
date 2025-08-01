@@ -17,6 +17,7 @@ var current_State
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+signal health_changed(health)
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_scene = preload("res://scenes/Attack.tscn")
 
@@ -112,6 +113,7 @@ func take_damage(amount, knockback = Vector2.ZERO):
 		return
 	
 	health -= amount
+	emit_signal("health_changed", health)
 	print("Player took damage. Health: ", health)
 
 	is_invulnerable = true
@@ -129,3 +131,4 @@ func take_damage(amount, knockback = Vector2.ZERO):
 func _on_invuln_timer_timeout() -> void:
 	is_invulnerable = false
 	modulate = Color(1, 1, 1) # Reset tint
+	
