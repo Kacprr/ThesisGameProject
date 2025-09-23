@@ -1,15 +1,78 @@
-[gd_scene load_steps=2 format=3 uid="uid://ck3pxjp1rj2is"]
+[gd_scene load_steps=6 format=3 uid="uid://ck3pxjp1rj2is"]
 
 [ext_resource type="Script" uid="uid://n5x6wv4ccpnl" path="res://Scripts/hud.gd" id="1_sd512"]
+[ext_resource type="Texture2D" uid="uid://b476uqstrun2m" path="res://Assets/sprites/star.png" id="2_jo1ms"]
+
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0, 0, 0, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.15)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="2"]
+bg_color = Color(0.15, 0.15, 0.18, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="3"]
+bg_color = Color(0.2, 0.8, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_sd512")
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-modulate = Color(1, 0.0509804, 0, 1)
-offset_right = 244.0
-offset_bottom = 14.0
+[node name="UIFrame" type="Panel" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 280.0
+offset_bottom = 60.0
+theme_override_styles/panel = SubResource("1")
+
+[node name="HealthBar" type="ProgressBar" parent="UIFrame"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 190.0
+offset_bottom = 30.0
+theme_override_styles/background = SubResource("2")
+theme_override_styles/fill = SubResource("3")
 max_value = 5.0
 step = 1.0
 value = 5.0
 show_percentage = false
+
+[node name="HpLabel" type="Label" parent="UIFrame"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 28.0
+offset_right = 36.0
+offset_bottom = 51.0
+text = "HP"
+
+[node name="ScoreContainer" type="HBoxContainer" parent="UIFrame"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 12.0
+offset_right = 260.0
+offset_bottom = 30.0
+
+[node name="CoinIcon" type="TextureRect" parent="UIFrame/ScoreContainer"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+texture = ExtResource("2_jo1ms")
+expand_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="UIFrame/ScoreContainer"]
+layout_mode = 2
+text = "0"

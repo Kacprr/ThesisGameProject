@@ -3,7 +3,8 @@ extends CharacterBody2D
 const speed = 60
 
 var direction = 1
-var health = 1
+var health = 3
+var max_health = 3
 
 # State enumeration
 enum State {
@@ -11,18 +12,17 @@ enum State {
 	ATTACKING
 }
 
-
 var state = State.IDLE
 var attack_cooldown = 1.0 # seconds
 var can_attack = true
-
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var ray_cast_right: RayCast2D = $RayCastRight
 @onready var ray_cast_left: RayCast2D = $RayCastLeft
 @onready var damage_area: Area2D = $DamageArea
-
 @onready var attack_timer: Timer = $AttackTimer
+
+var health_bar: HealthBar
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -30,6 +30,13 @@ func _ready() -> void:
 	attack_timer.wait_time = attack_cooldown
 	attack_timer.one_shot = true
 	attack_timer.connect("timeout", Callable(self, "_on_attack_timer_timeout"))
+	
+	# Create and attach health bar above the slime
+	health_bar = HealthBar.new()
+	health_bar.position = Vector2(0, -16)
+	health_bar.set_max_value(max_health)
+	health_bar.set_value(health)
+	add_child(health_bar)
 
 func _physics_process(delta):
 	if state == State.IDLE:
@@ -60,6 +67,8 @@ func _on_damage_area_body_entered(body):
 
 func take_damage(amount):
 	health -= amount
+	if health_bar:
+		health_bar.set_value(health)
 	if health <= 0:
 		queue_free()
 

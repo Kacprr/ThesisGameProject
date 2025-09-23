@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="RuinsOfNorth"
-run/main_scene="uid://dolilhbitaa35"
-config/features=PackedStringArray("4.4", "Forward Plus")
+run/main_scene="uid://bj13u34s0bcgf"
+config/features=PackedStringArray("4.5", "Forward Plus")
 
 [autoload]
 
