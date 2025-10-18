@@ -4,6 +4,7 @@ var SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 var health = 5
 var is_invulnerable = false
+var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 
 #enumeration used to track the current state, makes it easier to play animations
 enum PlayerState {
@@ -32,6 +33,10 @@ func _physics_process(_delta: float) -> void:
 		current_State = PlayerState.JUMP
 		SPEED = 130
 		velocity.y += gravity * _delta
+	# --- JUMP/DOUBLE JUMP LOGIC ---
+	if is_on_floor():
+		jumps_left = 1
+		current_State = PlayerState.IDLE #Resets state when landing.
 
 
 	# Get the input direction: -1, 0 ,1
@@ -41,6 +46,13 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		current_State = PlayerState.JUMP
 		velocity.y = JUMP_VELOCITY
+		
+	# Handle double-jump
+	elif Input.is_action_just_pressed("jump") and jumps_left > 0:
+		current_State = PlayerState.JUMP
+		velocity.y = JUMP_VELOCITY
+		jumps_left -= 1 #Decrement the counter!
+	
 
 	#Handle dash
 	if Input.is_action_just_pressed("dash") and is_on_floor() and current_State != PlayerState.DASH and direction:

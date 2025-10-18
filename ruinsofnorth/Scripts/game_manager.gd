@@ -2,8 +2,6 @@ extends Node
 
 var score = 0
 
-@onready var score_label: Label = $ScoreLabel
-
 func _ready() -> void:
 	call_deferred("_init_hud")
 
@@ -22,7 +20,6 @@ func _init_hud() -> void:
 
 func add_point():
 	score += 1
-	score_label.text = "You collected " + str(score) + " coins."
 	var hud := get_node_or_null("../HUD")
 	if hud:
 		hud.update_score(score)
