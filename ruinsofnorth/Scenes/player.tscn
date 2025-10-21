@@ -1,7 +1,10 @@
-[gd_scene load_steps=35 format=3 uid="uid://cqeg14x8abmtp"]
+[gd_scene load_steps=38 format=3 uid="uid://cqeg14x8abmtp"]
 
 [ext_resource type="Script" uid="uid://bqtam2anigymj" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://dxq3j2e2w0rg7" path="res://Assets/sprites/knight.png" id="1_v0iea"]
+[ext_resource type="AudioStream" uid="uid://d04ddm0ldtl5g" path="res://Assets/sounds/jump.wav" id="3_vgqql"]
+[ext_resource type="AudioStream" uid="uid://cmuqm8uvmaucq" path="res://Assets/sounds/hurt.wav" id="4_fkybt"]
+[ext_resource type="AudioStream" uid="uid://dsya4gx0j53sl" path="res://Assets/sounds/simple-whoosh.wav" id="4_x3wgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xuaoq"]
 atlas = ExtResource("1_v0iea")
@@ -264,6 +267,15 @@ wait_time = 0.5
 [node name="InvulnTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_vgqql")
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_x3wgy")
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_fkybt")
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="InvulnTimer" to="." method="_on_invuln_timer_timeout"]
