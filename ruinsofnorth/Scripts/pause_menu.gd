@@ -1,8 +1,8 @@
 extends CanvasLayer
 
-@onready var resume_button: Button = $ColorRect/VBoxContainer/ResumeButton
-@onready var options_button: Button = $ColorRect/VBoxContainer/OptionsButton
-@onready var quit_button: Button = $ColorRect/VBoxContainer/QuitButton
+@onready var resume_button: Button = $VBoxContainer/ResumeButton
+@onready var options_button: Button = $VBoxContainer/OptionsButton
+@onready var quit_button: Button = $VBoxContainer/QuitButton
 
 
 const OPTIONS_SCENE = preload("res://Scenes/options_menu.tscn")
