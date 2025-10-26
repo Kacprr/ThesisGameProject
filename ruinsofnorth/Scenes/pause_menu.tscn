@@ -17,7 +17,7 @@ offset_bottom = 2.8799438
 color = Color(0.63235366, 0.6167795, 0.7763246, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 0.5
@@ -49,4 +49,4 @@ text = "Options"
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_1och7")
 theme_override_font_sizes/font_size = 18
-text = "Quit Game"
+text = "Main Menu"

@@ -27,13 +27,8 @@ func _on_resume_button_pressed():
 	resume_game()
 
 func _on_options_button_pressed():
-	var options_menu = OPTIONS_SCENE.instantiate()
-	
-	if options_button is Control:
-		options_button.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	
-	get_tree().root.add_child(options_menu)
-	queue_free() # Remove the Pause Menu
+	get_tree().change_scene_to_file("res://Scenes/options_menu.tscn")
+	resume_game()
 
 func _on_quit_button_pressed():
 	get_tree().quit()

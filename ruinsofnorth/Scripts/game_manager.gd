@@ -1,6 +1,7 @@
 extends Node
 
 var score = 0
+var paused_var = false
 
 const PAUSE_MENU_SCENE =  preload("res://Scenes/pause_menu.tscn")
 
@@ -23,7 +24,7 @@ func _init_hud() -> void:
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel") and not get_tree().paused:
 		get_tree().paused = true # Pause the game
-		
+		paused_var = true
 		var pause_menu = PAUSE_MENU_SCENE.instantiate()
 		if pause_menu is Control:
 			pause_menu.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
