@@ -14,6 +14,7 @@ extends Control
 const MASTER_BUS = 0
 const MUSIC_BUS = 1
 const SFX_BUS = 2
+const PAUSE_MENU_SCENE = preload("res://Scenes/pause_menu.tscn")
 
 func _ready():
 	# Connect signals
@@ -63,7 +64,15 @@ func _on_fullscreen_toggled(enabled: bool):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
 func _on_back_pressed():
-	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
+	if get_tree().paused:
+		var pause_menu = PAUSE_MENU_SCENE.instantiate()
+		
+		if pause_menu is Control:
+			pause_menu.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			get_tree().root.add_child(pause_menu)
+			queue_free()
+	else:
+		get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
 
 func _on_reset_pressed():
 	# Reset audio to default

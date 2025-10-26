@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://0bhe4t211pey"]
+[gd_scene load_steps=12 format=3 uid="uid://0bhe4t211pey"]
 
 [ext_resource type="Script" uid="uid://d0qnxbbps1sxi" path="res://Scripts/slime.gd" id="1_aiwxb"]
 [ext_resource type="Texture2D" uid="uid://dsycexheagxjv" path="res://Assets/sprites/slime_green.png" id="1_swwnm"]
+[ext_resource type="AudioStream" uid="uid://dt53aelssoms8" path="res://Assets/sounds/explosion.wav" id="3_aiwxb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_swwnm"]
 atlas = ExtResource("1_swwnm")
@@ -90,3 +91,8 @@ position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_swwnm")
 
 [node name="AttackTimer" type="Timer" parent="."]
+
+[node name="RespawnTimer" type="Timer" parent="."]
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_aiwxb")
