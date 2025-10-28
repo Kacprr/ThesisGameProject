@@ -71,7 +71,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"new_animation",
-"speed": 18.0
+"speed": 17.0
 }]
 
 [node name="Attack" type="Area2D"]

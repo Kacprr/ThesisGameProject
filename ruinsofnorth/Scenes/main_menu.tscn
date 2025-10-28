@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bj13u34s0bcgf"]
+[gd_scene load_steps=5 format=3 uid="uid://bj13u34s0bcgf"]
 
 [ext_resource type="Script" uid="uid://fl6v26k8fsow" path="res://Scripts/main_menu.gd" id="1_28flt"]
 [ext_resource type="FontFile" uid="uid://dalj3asj0d324" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_48xlc"]
+[ext_resource type="Texture2D" uid="uid://c6a58ms8ekf6r" path="res://Assets/Backgrounds/MainMenuBG.png" id="2_ce3w2"]
 [ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="3_1ehe0"]
 
 [node name="MainMenu" type="Control"]
@@ -13,41 +14,49 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_28flt")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 0
-offset_top = 3.0
-offset_right = 1280.0
-offset_bottom = 723.0
-color = Color(0.531063, 0.689237, 0.841431, 1)
+[node name="MainMenuBg" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("2_ce3w2")
 
 [node name="MenuContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
+offset_top = 34.0
+offset_right = 1279.0
+offset_bottom = 467.0
 alignment = 1
 
 [node name="Title" type="Label" parent="MenuContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 theme_override_colors/font_color = Color(0.00921877, 0.270652, 0.419305, 1)
 theme_override_fonts/font = ExtResource("2_48xlc")
 theme_override_font_sizes/font_size = 48
-text = "Ruins Of North"
+text = "Ruins
+of
+North"
 horizontal_alignment = 1
 
 [node name="PlayButton" type="Button" parent="MenuContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_1ehe0")
 theme_override_font_sizes/font_size = 32
 text = "Play"
 
 [node name="OptionsButton" type="Button" parent="MenuContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_1ehe0")
 theme_override_font_sizes/font_size = 32
 text = "Options"
 
 [node name="ExitButton" type="Button" parent="MenuContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_1ehe0")
 theme_override_font_sizes/font_size = 32
 text = "Exit"

@@ -6,7 +6,7 @@ var health = 10
 var is_invulnerable = false
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 
-const ATTACK_COOLDOWN = 0.8 # cooldown time in sec
+const ATTACK_COOLDOWN = 0.35 # cooldown time in sec
 var can_attack = true
 
 enum PlayerState {
@@ -54,18 +54,24 @@ func _physics_process(_delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		current_State = PlayerState.JUMP
-		velocity.y = JUMP_VELOCITY
-		jump_sound.play()
-		
+	if is_on_floor():
+		if Input.is_action_just_pressed("jump"):
+			current_State = PlayerState.JUMP
+			velocity.y = JUMP_VELOCITY
+			jump_sound.play()
+
 	# Handle double-jump
 	elif Input.is_action_just_pressed("jump") and jumps_left > 0:
 		current_State = PlayerState.JUMP
 		velocity.y = JUMP_VELOCITY
 		jumps_left -= 1  #Decrement the counter!
 		jump_sound.play()
-	
+
+	#handle short jump
+	else:
+		if Input.is_action_just_released("jump"):
+			current_State = PlayerState.JUMP
+			velocity.y *= 0.5
 
 	#Handle dash
 	if Input.is_action_just_pressed("dash") and is_on_floor() and current_State != PlayerState.DASH and direction:

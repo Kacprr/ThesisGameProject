@@ -255,7 +255,7 @@ script = ExtResource("1_cvnsp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
-animation = &"idle"
+animation = &"attack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)
@@ -269,6 +269,7 @@ wait_time = 1.5
 one_shot = true
 
 [node name="AttackCooldownTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_vgqql")
