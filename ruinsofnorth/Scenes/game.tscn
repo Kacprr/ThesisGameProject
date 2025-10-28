@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ck3pxjp1rj2is" path="res://Scenes/HUD.tscn" id="4_ldgsr"]
 [ext_resource type="PackedScene" uid="uid://bsyig1fuq53cg" path="res://Scenes/killzone.tscn" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://0bhe4t211pey" path="res://Scenes/slime.tscn" id="6_i6g32"]
-[ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="7_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://dlo7kaxspecfe" path="res://Scenes/health_pickup.tscn" id="7_h4fw4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -263,6 +263,14 @@ position = Vector2(22, 23)
 [node name="Coin4" parent="Coins" instance=ExtResource("4_3dryh")]
 position = Vector2(-26, 41)
 
+[node name="Health" type="Node" parent="."]
+
+[node name="HealthPickup" parent="Health" instance=ExtResource("7_h4fw4")]
+position = Vector2(116, -3)
+
+[node name="HealthPickup2" parent="Health" instance=ExtResource("7_h4fw4")]
+position = Vector2(304, 41)
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Platform" parent="Platforms" instance=ExtResource("2_wrm1d")]
@@ -282,19 +290,6 @@ position = Vector2(-268, 64)
 
 [node name="Slime2" parent="." instance=ExtResource("6_i6g32")]
 position = Vector2(-566, 64)
-
-[node name="Labels" type="Node" parent="."]
-
-[node name="Label" type="Label" parent="Labels"]
-offset_left = -309.0
-offset_top = 4.0
-offset_right = -218.0
-offset_bottom = 36.0
-theme_override_colors/font_color = Color(0.73091, 0.234681, 0.287133, 1)
-theme_override_fonts/font = ExtResource("7_1l0tm")
-theme_override_font_sizes/font_size = 8
-text = "Space to jump.
-Shift to dash."
 
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]

@@ -6,6 +6,9 @@ var health = 10
 var is_invulnerable = false
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 
+const ATTACK_COOLDOWN = 0.8 # cooldown time in sec
+var can_attack = true
+
 enum PlayerState {
 	IDLE,
 	JUMP,
@@ -24,10 +27,13 @@ signal health_changed(health)
 @onready var jump_sound: AudioStreamPlayer2D = $JumpSound
 @onready var dash_sound: AudioStreamPlayer2D = $DashSound
 @onready var hurt_sound: AudioStreamPlayer2D = $HurtSound
+@onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
 
 
 func _ready():
 	add_to_group("Player")
+	attack_cooldown_timer.wait_time = ATTACK_COOLDOWN
+	attack_cooldown_timer.one_shot = true
 
 
 func _physics_process(_delta: float) -> void:
@@ -101,10 +107,13 @@ func _physics_process(_delta: float) -> void:
 			animated_sprite.play("run")
 
 func _unhandled_input(event):
-	if event.is_action_pressed("attack"):
+	if event.is_action_pressed("attack") and can_attack:
 		spawn_attack()
 
 func spawn_attack():
+	can_attack = false
+	attack_cooldown_timer.start()
+	
 	var attack = attack_scene.instantiate()
 	# Flip position based on facing direction
 	var offset = Vector2(15, -5)
@@ -115,6 +124,9 @@ func spawn_attack():
 	attack.global_position = global_position + offset
 	get_tree().current_scene.add_child(attack)
 
+
+func _on_attack_cooldown_timer_timeout():
+	can_attack = true
 
 #After dash is complete reseting speed back to base speed and ending dash
 func _on_dash_timer_timeout() -> void:
@@ -146,6 +158,9 @@ func take_damage(amount, knockback = Vector2.ZERO):
 	if health <= 0:
 		die()
 
+func heal(amount: int):
+	health = min(health + amount, 10)
+	emit_signal("health_changed", health)
 
 func _on_invuln_timer_timeout() -> void:
 	is_invulnerable = false

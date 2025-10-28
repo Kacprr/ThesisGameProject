@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlo7kaxspecfe"]
+
+[ext_resource type="Script" uid="uid://iqe6m5oxgnve" path="res://Scripts/health_pickup.gd" id="1_lj2jr"]
+[ext_resource type="Texture2D" uid="uid://b4il86nip7wul" path="res://Assets/sprites/fruit.png" id="2_18ac6"]
+[ext_resource type="AudioStream" uid="uid://dk2dgbm4sstw" path="res://Assets/sounds/power_up.wav" id="3_18ac6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v1ck8"]
+radius = 8.0
+
+[node name="HealthPickup" type="Area2D"]
+script = ExtResource("1_lj2jr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_18ac6")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_v1ck8")
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_18ac6")
+
+[node name="RespawnTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]
