@@ -74,12 +74,11 @@ func _physics_process(delta):
 		animated_sprite.play("attack")
 
 func _on_damage_area_body_entered(body):
-	print("DamageArea triggered by: ", body.name)
 	if body.is_in_group("Player") and can_attack:
 		if body.has_method("take_damage"):
 			state = State.ATTACKING
 			can_attack = false
-			var knockback = (body.global_position - global_position).normalized() * 200
+			var knockback = (body.global_position - global_position).normalized() * 100
 			body.take_damage(1, knockback)
 			attack_timer.start()
 

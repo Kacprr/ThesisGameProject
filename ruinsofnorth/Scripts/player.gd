@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
-var SPEED = 130.0
+var SPEED = 120.0
 const JUMP_VELOCITY = -300.0
 var health = 10
 var is_invulnerable = false
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 
-const ATTACK_COOLDOWN = 0.35 # cooldown time in sec
+const ATTACK_COOLDOWN = 0.4 # cooldown time in sec
 var can_attack = true
 
 enum PlayerState {
@@ -14,6 +14,7 @@ enum PlayerState {
 	JUMP,
 	DASH,
 	RUN,
+	STUNNED,
 }
 
 var current_State
@@ -28,6 +29,7 @@ signal health_changed(health)
 @onready var dash_sound: AudioStreamPlayer2D = $DashSound
 @onready var hurt_sound: AudioStreamPlayer2D = $HurtSound
 @onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
+@onready var knockback_timer: Timer = $KnockbackTimer
 
 
 func _ready():
@@ -38,6 +40,12 @@ func _ready():
 
 func _physics_process(_delta: float) -> void:
 	const DASH_SPEED = 200.0
+	
+	if current_State == PlayerState.STUNNED:
+		velocity.y += gravity * _delta
+		move_and_slide()
+		return
+	
 	# Add the gravity.
 	if !is_on_floor():
 		if current_State != PlayerState.DASH:
@@ -139,7 +147,6 @@ func _on_dash_timer_timeout() -> void:
 	current_State = PlayerState.IDLE
 
 func die():
-	print("You died!")
 	get_tree().call_deferred("reload_current_scene")
 
 
@@ -149,7 +156,6 @@ func take_damage(amount, knockback = Vector2.ZERO):
 	
 	health -= amount
 	emit_signal("health_changed", health)
-	print("Player took damage. Health: ", health)
 	
 	hurt_sound.play()
 
@@ -159,10 +165,16 @@ func take_damage(amount, knockback = Vector2.ZERO):
 
 	# Apply knockback
 	if knockback != Vector2.ZERO:
-		velocity += knockback
+		apply_knockback(knockback, 0.15)
 
 	if health <= 0:
 		die()
+
+func apply_knockback(knocback_vector: Vector2, stun_duration: float):
+	current_State = PlayerState.STUNNED
+	velocity = knocback_vector
+	knockback_timer.wait_time = stun_duration
+	knockback_timer.start()
 
 func heal(amount: int):
 	health = min(health + amount, 10)
@@ -172,3 +184,5 @@ func _on_invuln_timer_timeout() -> void:
 	is_invulnerable = false
 	modulate = Color(1, 1, 1) # Reset tint
 	
+func _on_knockback_timer_timeout() -> void:
+	current_State = PlayerState.IDLE

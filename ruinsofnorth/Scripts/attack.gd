@@ -21,7 +21,6 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if _recent_hits.has(body):
 		return
-	print("Attack hit: ", body.name)
 	if body.is_in_group("enemies"):
 		if body.has_method("take_damage"):
 			var knockback_direction: Vector2 = (body.global_position - global_position).normalized()

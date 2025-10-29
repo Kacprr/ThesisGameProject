@@ -265,10 +265,14 @@ shape = SubResource("CircleShape2D_3smsa")
 wait_time = 0.5
 
 [node name="InvulnTimer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 0.8
 one_shot = true
 
 [node name="AttackCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="KnockbackTimer" type="Timer" parent="."]
+wait_time = 0.15
 one_shot = true
 
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
@@ -283,3 +287,4 @@ stream = ExtResource("4_fkybt")
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="InvulnTimer" to="." method="_on_invuln_timer_timeout"]
 [connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
