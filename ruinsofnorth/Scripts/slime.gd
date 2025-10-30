@@ -15,7 +15,7 @@ enum State {
 }
 
 var state = State.IDLE
-var attack_cooldown = 0.7 # seconds
+@export var attack_cooldown = 0.2 # seconds
 var can_attack = true
 
 # Respawn variables

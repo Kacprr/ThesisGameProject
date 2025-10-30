@@ -210,7 +210,7 @@ shape = SubResource("CircleShape2D_m55n1")
 
 [node name="Pickupsound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_g537i")
-volume_db = -31.066
+volume_db = -30.0
 bus = &"SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

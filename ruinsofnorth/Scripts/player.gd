@@ -181,8 +181,8 @@ func apply_vertical_velocity(force: float):
 func apply_knockback(knocback_vector: Vector2, stun_duration: float):
 	current_State = PlayerState.STUNNED
 	velocity = knocback_vector
-	velocity.y = knocback_vector.y * 2
-	if direction_var == -1 :
+	velocity.y = knocback_vector.y * 1.5
+	if direction_var == -1:
 		velocity.x += 100
 	elif direction_var == 1:
 		velocity.x -= 100

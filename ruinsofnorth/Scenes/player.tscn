@@ -278,9 +278,11 @@ one_shot = true
 
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_vgqql")
+volume_db = -30.0
 
 [node name="DashSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_x3wgy")
+volume_db = -30.0
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_fkybt")

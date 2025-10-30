@@ -27,6 +27,11 @@ func _on_body_entered(body: Node2D) -> void:
 			knockback_direction.y -= KNOCKBACK_UP_MULTIPLIER
 			
 			var knockback_vector: Vector2 = knockback_direction.normalized() * KNOCKBACK_POWER
+			if scale.x == -1:
+				knockback_vector.x += -100
+			else:
+				knockback_vector.x += 100
+				
 			body.take_damage(damage, knockback_vector)
 			
 			_recent_hits[body] = true
