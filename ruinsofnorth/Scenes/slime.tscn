@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://0bhe4t211pey"]
+[gd_scene load_steps=13 format=3 uid="uid://0bhe4t211pey"]
 
 [ext_resource type="Script" uid="uid://d0qnxbbps1sxi" path="res://Scripts/slime.gd" id="1_aiwxb"]
 [ext_resource type="Texture2D" uid="uid://dsycexheagxjv" path="res://Assets/sprites/slime_green.png" id="1_swwnm"]
@@ -55,6 +55,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swwnm"]
 size = Vector2(16, 13)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aiwxb"]
+size = Vector2(10, 2)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_swwnm"]
 radius = 9.0
 
@@ -83,6 +86,14 @@ position = Vector2(0, -6)
 target_position = Vector2(-10, 0)
 collision_mask = 8
 
+[node name="BounceArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BounceArea"]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_aiwxb")
+
 [node name="DamageArea" type="Area2D" parent="."]
 collision_layer = 2
 
@@ -96,3 +107,5 @@ shape = SubResource("CircleShape2D_swwnm")
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_aiwxb")
+
+[connection signal="body_entered" from="BounceArea" to="." method="_on_bounce_area_body_entered"]

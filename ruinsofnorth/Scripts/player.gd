@@ -1,13 +1,14 @@
 extends CharacterBody2D
 
-var SPEED = 120.0
-const JUMP_VELOCITY = -300.0
-var health = 10
+@export var SPEED: int = 120
+@export var health: int = 10
+
 var is_invulnerable = false
+var can_attack = true
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 
 const ATTACK_COOLDOWN = 0.4 # cooldown time in sec
-var can_attack = true
+const JUMP_VELOCITY = -300.0
 
 enum PlayerState {
 	IDLE,
@@ -169,10 +170,15 @@ func take_damage(amount, knockback = Vector2.ZERO):
 
 	if health <= 0:
 		die()
+		
+func apply_vertical_velocity(force: float):
+	velocity.y = force
+	current_State = PlayerState.JUMP
 
 func apply_knockback(knocback_vector: Vector2, stun_duration: float):
 	current_State = PlayerState.STUNNED
 	velocity = knocback_vector
+	velocity.y = knocback_vector.y * 2
 	knockback_timer.wait_time = stun_duration
 	knockback_timer.start()
 

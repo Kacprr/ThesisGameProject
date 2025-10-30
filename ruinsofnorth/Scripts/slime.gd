@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
-const speed = 60
+const speed = 50
+const BOUNCE_FORCE = -1000.0
 
-var direction = 1
-var health = 5
+@export var health: int = 5
 var max_health = 5
+var direction = 1
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # State enumeration
@@ -14,7 +15,7 @@ enum State {
 }
 
 var state = State.IDLE
-var attack_cooldown = 1.0 # seconds
+var attack_cooldown = 0.7 # seconds
 var can_attack = true
 
 # Respawn variables
@@ -125,5 +126,26 @@ func _on_respawn_timer_timeout():
 		health_bar.show()
 
 func _on_attack_timer_timeout():
-	state = State.IDLE
-	can_attack = true
+	var damage_area_nodes = damage_area.get_overlapping_bodies()
+	var player_in_range = false
+	var player_node = null
+	
+	for body in damage_area_nodes:
+		if body.is_in_group("Player"):
+			player_in_range = true
+			player_node = body
+			break
+	if player_in_range:
+		if player_node.has_method("take_damage"):
+			var knockback = (player_node.global_position - global_position).normalized() * 200
+			player_node.take_damage(1, knockback)
+			attack_timer.start()
+	else:
+		state = State.IDLE
+		can_attack = true
+
+
+func _on_bounce_area_body_entered(body: Node2D):
+	if body.is_in_group("Player") and body.has_method("apply_vertical_velocity"):
+		body.apply_vertical_velocity(BOUNCE_FORCE)
+		body.take_damage()
