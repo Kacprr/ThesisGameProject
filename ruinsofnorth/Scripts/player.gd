@@ -6,6 +6,7 @@ extends CharacterBody2D
 var is_invulnerable = false
 var can_attack = true
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
+var direction_var = 0
 
 const ATTACK_COOLDOWN = 0.4 # cooldown time in sec
 const JUMP_VELOCITY = -300.0
@@ -61,6 +62,8 @@ func _physics_process(_delta: float) -> void:
 
 	# Get the input direction: -1, 0 ,1
 	var direction := Input.get_axis("move_left", "move_right")
+	if direction != 0:
+		direction_var = direction
 
 	# Handle jump.
 	if is_on_floor():
@@ -179,6 +182,10 @@ func apply_knockback(knocback_vector: Vector2, stun_duration: float):
 	current_State = PlayerState.STUNNED
 	velocity = knocback_vector
 	velocity.y = knocback_vector.y * 2
+	if direction_var == -1 :
+		velocity.x += 100
+	elif direction_var == 1:
+		velocity.x -= 100
 	knockback_timer.wait_time = stun_duration
 	knockback_timer.start()
 
