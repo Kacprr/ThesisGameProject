@@ -6,7 +6,7 @@ extends Area2D
 var _recent_hits := {}
 var _hit_cooldown := 0.2
 
-const KNOCKBACK_POWER: float = 1
+const KNOCKBACK_POWER: float = 300
 const KNOCKBACK_UP_MULTIPLIER: float = 0.5
 
 func _ready():
@@ -23,13 +23,10 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if body.is_in_group("enemies"):
 		if body.has_method("take_damage"):
+			var knockback_direction: Vector2 = (body.global_position - global_position).normalized()
+			knockback_direction.y -= KNOCKBACK_UP_MULTIPLIER
 			
-			var knockback_vector: Vector2
-			if scale.x == -1:
-				knockback_vector.x += -100
-			else:
-				knockback_vector.x += 100
-				
+			var knockback_vector: Vector2 = knockback_direction.normalized() * KNOCKBACK_POWER
 			body.take_damage(damage, knockback_vector)
 			
 			_recent_hits[body] = true
