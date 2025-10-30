@@ -173,6 +173,7 @@ func take_damage(amount, knockback = Vector2.ZERO):
 func apply_knockback(knocback_vector: Vector2, stun_duration: float):
 	current_State = PlayerState.STUNNED
 	velocity = knocback_vector
+	velocity.y = knocback_vector.y * 3
 	knockback_timer.wait_time = stun_duration
 	knockback_timer.start()
 
