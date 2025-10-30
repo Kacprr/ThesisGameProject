@@ -52,8 +52,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_aiwxb"]
-radius = 8.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aiwxb"]
+radius = 7.0
+height = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_paq7w"]
 radius = 9.0
@@ -74,7 +75,7 @@ autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)
-shape = SubResource("CircleShape2D_aiwxb")
+shape = SubResource("CapsuleShape2D_aiwxb")
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, -6)
