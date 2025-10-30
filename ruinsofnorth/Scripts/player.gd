@@ -154,7 +154,7 @@ func die():
 	get_tree().call_deferred("reload_current_scene")
 
 
-func take_damage(amount, knockback = Vector2.ZERO):
+func take_damage(amount):
 	if is_invulnerable:
 		return
 	
@@ -167,9 +167,8 @@ func take_damage(amount, knockback = Vector2.ZERO):
 	modulate = Color(1, 0.5, 0.5) # Red tint
 	$InvulnTimer.start()
 
-	# Apply knockback
-	if knockback != Vector2.ZERO:
-		apply_knockback(knockback, 0.15)
+	
+	apply_knockback(0.15)
 
 	if health <= 0:
 		die()
@@ -178,14 +177,13 @@ func apply_vertical_velocity(force: float):
 	velocity.y = force
 	current_State = PlayerState.JUMP
 
-func apply_knockback(knocback_vector: Vector2, stun_duration: float):
+func apply_knockback(stun_duration: float):
 	current_State = PlayerState.STUNNED
-	velocity = knocback_vector
-	velocity.y = knocback_vector.y * 1.5
+	velocity.y = -300
 	if direction_var == -1:
-		velocity.x += 100
+		velocity.x += 200
 	elif direction_var == 1:
-		velocity.x -= 100
+		velocity.x -= 200
 	knockback_timer.wait_time = stun_duration
 	knockback_timer.start()
 

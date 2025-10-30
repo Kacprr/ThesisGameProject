@@ -79,8 +79,7 @@ func _on_damage_area_body_entered(body):
 		if body.has_method("take_damage"):
 			state = State.ATTACKING
 			can_attack = false
-			var knockback = (body.global_position - global_position).normalized() * 100
-			body.take_damage(1, knockback)
+			body.take_damage(1)
 			attack_timer.start()
 
 func take_damage(amount, knockback_vector: Vector2 = Vector2.ZERO):
@@ -137,8 +136,7 @@ func _on_attack_timer_timeout():
 			break
 	if player_in_range:
 		if player_node.has_method("take_damage"):
-			var knockback = (player_node.global_position - global_position).normalized() * 200
-			player_node.take_damage(1, knockback)
+			player_node.take_damage(1)
 			attack_timer.start()
 	else:
 		state = State.IDLE
