@@ -5,7 +5,7 @@ const BOUNCE_FORCE = -1000.0
 
 @export var health: int = 5
 var max_health = 5
-var direction = 1
+var direction
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # State enumeration
@@ -34,6 +34,7 @@ const RESPAWN_TIME: float = 5.0 #seconds
 var health_bar: HealthBar
 
 func _ready() -> void:
+	velocity.x = 50
 	add_to_group("enemies")
 	initial_position = global_position
 	
@@ -61,12 +62,15 @@ func _physics_process(delta):
 	if state == State.IDLE:
 		if ray_cast_right.is_colliding():
 			direction = -1
+			if velocity.x > -50 and true:
+				velocity.x = -50
 			animated_sprite.flip_h = true
-		elif ray_cast_left.is_colliding():
+		elif ray_cast_left.is_colliding(): 
 			direction = 1
+			if velocity.x < 50:
+				velocity.x = 50
 			animated_sprite.flip_h = false
-			
-		velocity.x = direction * speed
+		
 		move_and_slide()
 		animated_sprite.play("idle")
 	elif state == State.ATTACKING:
@@ -89,7 +93,8 @@ func take_damage(amount, knockback_vector: Vector2 = Vector2.ZERO):
 	
 	# Applying knockback if a vector is provided.
 	if knockback_vector != Vector2.ZERO:
-		velocity = knockback_vector
+		velocity += knockback_vector
+		
 		
 	if health <= 0:
 		die_and_respawn() # Updated by new function
