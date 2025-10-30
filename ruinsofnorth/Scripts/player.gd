@@ -43,6 +43,11 @@ func _ready():
 func _physics_process(_delta: float) -> void:
 	const DASH_SPEED = 200.0
 	
+	# Get the input direction: -1, 0 ,1
+	var direction := Input.get_axis("move_left", "move_right")
+	if direction != 0:
+		direction_var = direction
+	
 	if current_State == PlayerState.STUNNED:
 		velocity.y += gravity * _delta
 		move_and_slide()
@@ -59,12 +64,6 @@ func _physics_process(_delta: float) -> void:
 		if current_State != PlayerState.DASH:
 			current_State = PlayerState.IDLE #Resets state when landing.
 
-
-	# Get the input direction: -1, 0 ,1
-	var direction := Input.get_axis("move_left", "move_right")
-	if direction != 0:
-		direction_var = direction
-
 	# Handle jump.
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump"):
@@ -79,13 +78,13 @@ func _physics_process(_delta: float) -> void:
 		jumps_left -= 1  #Decrement the counter!
 		jump_sound.play()
 
-	#handle short jump
+	# Handle short jump
 	else:
 		if Input.is_action_just_released("jump"):
 			current_State = PlayerState.JUMP
 			velocity.y *= 0.5
 
-	#Handle dash
+	# Handle dash
 	if Input.is_action_just_pressed("dash") and is_on_floor() and current_State != PlayerState.DASH and direction:
 		current_State = PlayerState.DASH
 		var active_direction = direction
@@ -111,7 +110,6 @@ func _physics_process(_delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
-		
 
 	# Play Animations based on the current_state
 	if current_State == PlayerState.DASH:

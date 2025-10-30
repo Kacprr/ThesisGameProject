@@ -24,22 +24,19 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if body.is_in_group("enemies"):
 		if body.has_method("take_damage"):
-			_recent_hits[body] = true
-			
 			var knockback_direction: Vector2 = (body.global_position - global_position).normalized()
 			knockback_direction.y -= KNOCKBACK_UP_MULTIPLIER
 			
 			var knockback_vector: Vector2 = knockback_direction.normalized() * KNOCKBACK_POWER
 			body.take_damage(damage, knockback_vector)
 			
+			_recent_hits[body] = true # Registering hit
+			
+			# Disabling the attack hit-box!
 			if collision_shape_2d:
 				collision_shape_2d.set_deferred("disabled", true)
-				await get_tree().create_timer(0.5).timeout
-			if collision_shape_2d:
-				collision_shape_2d.set_deferred("disabled", false)
+				await get_tree().create_timer(_hit_cooldown).timeout
 			
-			# clear recent hit after short delay to avoid multi-hit in one overlap
-			await get_tree().create_timer(_hit_cooldown).timeout
 			_recent_hits.erase(body)
 
 func set_flip():

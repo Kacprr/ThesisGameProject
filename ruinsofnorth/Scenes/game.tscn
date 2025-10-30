@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=17 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bsyig1fuq53cg" path="res://Scenes/killzone.tscn" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://0bhe4t211pey" path="res://Scenes/slime.tscn" id="6_i6g32"]
 [ext_resource type="PackedScene" uid="uid://dlo7kaxspecfe" path="res://Scenes/health_pickup.tscn" id="7_h4fw4"]
+[ext_resource type="PackedScene" uid="uid://dwd6xnyrx4mvf" path="res://Scenes/slime_purple.tscn" id="10_ldgsr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -32,10 +33,13 @@ texture = ExtResource("2_qxrlw")
 8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:0/0 = 0
 9:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -5.93534, 8, 0.91373, -8, -1.72593)
+9:0/0/physics_layer_0/polygon_0/one_way = true
 10:0/0 = 0
 10:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -5.77376, 8, -5.93534, 8, 0.859921, -8, 0.982767)
+10:0/0/physics_layer_0/polygon_0/one_way = true
 11:0/0 = 0
 11:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.63368, 8, -8, 8, -1.10561, -8, 0.245692)
+11:0/0/physics_layer_0/polygon_0/one_way = true
 0:1/0 = 0
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:1/0 = 0
@@ -55,8 +59,14 @@ texture = ExtResource("2_qxrlw")
 8:1/0 = 0
 8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:1/0 = 0
+9:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3.2680073, -5.5839043, -1.0152555, -1.891181, -0.9169364, -0.11461687, -2.2923408, 2.3496494, 0.11461687, 6.292906, 0, 8, -2.1815405, 8, -4.782608, 5.943983, -7.0096374, 2.2970753, -6.9149127, 1.0182934, -5.920302, -2.1076279, -8, -5.943983, -8, -8, -5.730852)
+9:1/0/physics_layer_0/polygon_0/one_way = true
 10:1/0 = 0
+10:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -4.160597, -8, -1.0401497, -5.9960938, 1.0078125, -2.0039063, 1.0078125, -0.98322296, -0.08837962, -0.8154125, -0.90898466, 0.93613434, -0.97080564, 1.01865, -0.030182362, 2.0460262, 1.0101287, 6.014389, 1.0101287, 8, -1.0412874, 8, -3.9538732, 5.983628, -5.976083, 2.0448465, -5.991174, 1.0053177, -4.9713545, 0.98846817, -4.0142374, -0.6587639, -4.021911, -1.0414114, -4.9264393, -2.0641155, -5.999031, -5.9678516, -5.999031)
+10:1/0/physics_layer_0/polygon_0/one_way = true
 11:1/0 = 0
+11:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -2.0585823, -5.998719, 0.030182123, -2.0448465, 0.030182123, -0.022637367, -2.0674832, 1.0292912, -2.0853176, 2.0297556, -0.99601376, 5.9685373, -0.9809226, 8, -3.0745068, 8, -5.9911737, 5.903721, -8, 2.0865192, -8, 0.022637367, -5.976083, -0.98846817, -5.976083, -1.9693909, -7.002279, -5.938355, -7.002279, -8, -5.111168)
+11:1/0/physics_layer_0/polygon_0/one_way = true
 0:2/0 = 0
 0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:2/0 = 0
@@ -285,11 +295,16 @@ libraries = {
 }
 autoplay = "move"
 
-[node name="Slime" parent="." instance=ExtResource("6_i6g32")]
+[node name="Mobs" type="Node" parent="."]
+
+[node name="Slime" parent="Mobs" instance=ExtResource("6_i6g32")]
 position = Vector2(-268, 64)
 
-[node name="Slime2" parent="." instance=ExtResource("6_i6g32")]
+[node name="Slime2" parent="Mobs" instance=ExtResource("6_i6g32")]
 position = Vector2(-566, 64)
+
+[node name="SlimePurple" parent="Mobs" instance=ExtResource("10_ldgsr")]
+position = Vector2(1046, 64)
 
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]
