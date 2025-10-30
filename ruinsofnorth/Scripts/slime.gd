@@ -2,10 +2,14 @@ extends CharacterBody2D
 
 const speed = 50
 const BOUNCE_FORCE = -1000.0
+const KNOCKBACK_DECEL = 500 # Force to slow the mob down after being hit
 
 @export var health: int = 5
+@export var attack_cooldown = 0.2 # seconds
+
 var max_health = 5
-var direction = 1
+var direction
+var is_knocked_back = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # State enumeration
@@ -15,7 +19,6 @@ enum State {
 }
 
 var state = State.IDLE
-@export var attack_cooldown = 0.2 # seconds
 var can_attack = true
 
 # Respawn variables
@@ -34,6 +37,7 @@ const RESPAWN_TIME: float = 5.0 #seconds
 var health_bar: HealthBar
 
 func _ready() -> void:
+	direction = 1
 	add_to_group("enemies")
 	initial_position = global_position
 	
@@ -57,22 +61,32 @@ func _ready() -> void:
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
+	
+	if is_knocked_back:
+		velocity.x = move_toward(velocity.x, 0, KNOCKBACK_DECEL * delta)
 		
+	if is_on_floor() and abs(velocity.x) < 1.0:
+		is_knocked_back = false
+		velocity.x = 0
+		state = State.IDLE
+	
 	if state == State.IDLE:
-		if ray_cast_right.is_colliding():
-			direction = -1
-			animated_sprite.flip_h = true
-		elif ray_cast_left.is_colliding():
-			direction = 1
-			animated_sprite.flip_h = false
-			
-		velocity.x = direction * speed
-		move_and_slide()
-		animated_sprite.play("idle")
+		if not is_knocked_back:
+			if ray_cast_right.is_colliding():
+				direction = -1
+				animated_sprite.flip_h = true
+			elif ray_cast_left.is_colliding(): 
+				direction = 1
+				animated_sprite.flip_h = false
+				
+			velocity.x = direction * speed
+			animated_sprite.play("idle")
+		
 	elif state == State.ATTACKING:
 		velocity.x = 0
-		move_and_slide()
 		animated_sprite.play("attack")
+		
+	move_and_slide()
 
 func _on_damage_area_body_entered(body):
 	if body.is_in_group("Player") and can_attack:
@@ -90,6 +104,7 @@ func take_damage(amount, knockback_vector: Vector2 = Vector2.ZERO):
 	# Applying knockback if a vector is provided.
 	if knockback_vector != Vector2.ZERO:
 		velocity = knockback_vector
+		is_knocked_back = true
 		
 	if health <= 0:
 		die_and_respawn() # Updated by new function
@@ -111,6 +126,7 @@ func die_and_respawn():
 func _on_respawn_timer_timeout():
 	health = max_health
 	state = State.IDLE
+	is_knocked_back = false # Resets on respawn.
 	
 	global_position = initial_position
 	velocity = Vector2.ZERO
@@ -146,4 +162,4 @@ func _on_attack_timer_timeout():
 func _on_bounce_area_body_entered(body: Node2D):
 	if body.is_in_group("Player") and body.has_method("apply_vertical_velocity"):
 		body.apply_vertical_velocity(BOUNCE_FORCE)
-		body.take_damage()
+		body.take_damage(1, Vector2.ZERO)
