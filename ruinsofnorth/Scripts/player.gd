@@ -10,6 +10,7 @@ var direction_var = 0
 
 const ATTACK_COOLDOWN = 0.4 # cooldown time in sec
 const JUMP_VELOCITY = -300.0
+const GAME_OVER_SCENE = preload("res://Scenes/game_over.tscn")
 
 enum PlayerState {
 	IDLE,
@@ -149,10 +150,18 @@ func _on_dash_timer_timeout() -> void:
 	current_State = PlayerState.IDLE
 
 func die():
-	get_tree().call_deferred("reload_current_scene")
+	set_process_input(false)
+	set_physics_process(false)
+	
+	animated_sprite.play("die")
+	
+	$CollisionShape2D.set_deferred("disabled", true)
+	await get_tree().create_timer(1.0).timeout
+	
+	var game_over_screen = GAME_OVER_SCENE.instantiate()
+	get_tree().root.add_child(game_over_screen)
 
-
-func take_damage(amount):
+func take_damage(amount, _knockback = Vector2.ZERO):
 	if is_invulnerable:
 		return
 	
