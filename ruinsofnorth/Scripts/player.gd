@@ -1,16 +1,21 @@
 extends CharacterBody2D
 
-@export var SPEED: int = 120
+@export var speed: int = 120
 @export var health: int = 10
 
 var is_invulnerable = false
 var can_attack = true
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 var direction_var = 0
+var current_stamina = max_stamina
 
 const ATTACK_COOLDOWN = 0.4 # cooldown time in sec
 const JUMP_VELOCITY = -300.0
 const GAME_OVER_SCENE = preload("res://Scenes/game_over.tscn")
+
+const max_stamina = 100
+const dash_cost = 30
+const stamina_regen = 25.0
 
 enum PlayerState {
 	IDLE,
@@ -25,6 +30,8 @@ var current_State
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 signal health_changed(health)
+signal stamina_changed(stamina)
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_scene = preload("res://scenes/Attack.tscn")
 
@@ -48,6 +55,10 @@ func _physics_process(_delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction != 0:
 		direction_var = direction
+	
+	if current_stamina < max_stamina:
+		current_stamina = min(current_stamina + stamina_regen * _delta, max_stamina)
+		emit_signal("stamina_changed", current_stamina) # Stamina signal
 	
 	if current_State == PlayerState.STUNNED:
 		velocity.y += gravity * _delta
@@ -86,7 +97,8 @@ func _physics_process(_delta: float) -> void:
 			velocity.y *= 0.5
 
 	# Handle dash
-	if Input.is_action_just_pressed("dash") and is_on_floor() and current_State != PlayerState.DASH and direction:
+	if Input.is_action_just_pressed("dash") and is_on_floor() and current_stamina >= dash_cost and current_State != PlayerState.DASH and direction:
+		current_stamina -= dash_cost
 		current_State = PlayerState.DASH
 		var active_direction = direction
 		$DashTimer.start()
@@ -105,10 +117,10 @@ func _physics_process(_delta: float) -> void:
 		if direction:
 			if is_on_floor():
 				current_State = PlayerState.RUN
-			velocity.x = direction * SPEED
+			velocity.x = direction * speed
 		else:
 			current_State = PlayerState.IDLE
-			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.x = move_toward(velocity.x, 0, speed)
 
 	move_and_slide()
 
