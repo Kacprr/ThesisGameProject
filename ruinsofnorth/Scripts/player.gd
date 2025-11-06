@@ -1,13 +1,15 @@
 extends CharacterBody2D
 
 @export var speed: int = 120
-@export var health: int = 10
+@export var health: int = 100
 
 var is_invulnerable = false
 var can_attack = true
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 var direction_var = 0
 var current_stamina = max_stamina
+var is_healing_over_time = false
+var hot_heal_amount = 0
 
 const ATTACK_COOLDOWN = 0.4 # cooldown time in sec
 const JUMP_VELOCITY = -300.0
@@ -15,7 +17,7 @@ const GAME_OVER_SCENE = preload("res://Scenes/game_over.tscn")
 
 const max_stamina = 100
 const dash_cost = 30
-const stamina_regen = 25.0
+const stamina_regen = 10.0
 
 enum PlayerState {
 	IDLE,
@@ -40,7 +42,7 @@ signal stamina_changed(stamina)
 @onready var hurt_sound: AudioStreamPlayer2D = $HurtSound
 @onready var attack_cooldown_timer: Timer = $AttackCooldownTimer
 @onready var knockback_timer: Timer = $KnockbackTimer
-
+@onready var hot_tick_timer: Timer = $HotTickTimer
 
 func _ready():
 	add_to_group("Player")
@@ -207,8 +209,38 @@ func apply_knockback(stun_duration: float):
 	knockback_timer.start()
 
 func heal(amount: int):
-	health = min(health + amount, 10)
+	health = min(health + amount, 100)
 	emit_signal("health_changed", health)
+	
+func start_heal_over_time(heal_amount: int, duration: float):
+	if is_healing_over_time:
+		return
+	is_healing_over_time = true
+	hot_heal_amount = heal_amount
+	
+	if animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("healing"):
+		animated_sprite.play("healing")
+		
+	hot_tick_timer.wait_time = 1.0
+	hot_tick_timer.start()
+	
+	await get_tree().create_timer(duration).timeout
+	stop_heal_over_time()
+	
+func stop_heal_over_time():
+	is_healing_over_time = false
+	hot_heal_amount = 0
+	hot_tick_timer.stop()
+	
+	if current_State == PlayerState.IDLE:
+		animated_sprite.play("idle")
+	elif current_State == PlayerState.RUN:
+		animated_sprite.play("run")
+		
+func _on_hot_tick_timer_timeout() -> void:
+	if is_healing_over_time:
+		heal(hot_heal_amount)
+		hot_tick_timer.start()
 
 func _on_invuln_timer_timeout() -> void:
 	is_invulnerable = false

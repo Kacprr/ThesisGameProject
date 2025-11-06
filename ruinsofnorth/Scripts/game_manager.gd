@@ -5,6 +5,9 @@ var score = 0
 const PAUSE_MENU_SCENE =  preload("res://Scenes/pause_menu.tscn")
 
 func _ready() -> void:
+	if Music:
+		Music.play()
+	
 	call_deferred("_init_hud")
 
 func _init_hud() -> void:

@@ -93,7 +93,7 @@ func _on_damage_area_body_entered(body):
 		if body.has_method("take_damage"):
 			state = State.ATTACKING
 			can_attack = false
-			body.take_damage(1)
+			body.take_damage(10)
 			attack_timer.start()
 
 func take_damage(amount, knockback_vector: Vector2 = Vector2.ZERO):
@@ -152,7 +152,7 @@ func _on_attack_timer_timeout():
 			break
 	if player_in_range:
 		if player_node.has_method("take_damage"):
-			player_node.take_damage(1)
+			player_node.take_damage(10)
 			attack_timer.start()
 	else:
 		state = State.IDLE
