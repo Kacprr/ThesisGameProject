@@ -1,7 +1,7 @@
 extends Area2D
 class_name KnightTrap
 
-@export var damage_amount: int = 1
+@export var damage_amount: int = 10
 @export var cooldown_time: float = 0.5
 @export var knockback_power: float = 150.0
 @export var isActive: bool = true

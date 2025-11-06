@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bppxw70q0434o"]
+
+[ext_resource type="Texture2D" uid="uid://w24defm8g5oq" path="res://Assets/sprites/Heart_strip2.png" id="1_pa31m"]
+[ext_resource type="Script" uid="uid://cbhdkepdlg7c6" path="res://Scripts/healing_effect.gd" id="2_6cojb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6n4o"]
+atlas = ExtResource("1_pa31m")
+region = Rect2(11, 0, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxj7q"]
+atlas = ExtResource("1_pa31m")
+region = Rect2(0, 0, 11, 11)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_338o0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6n4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxj7q")
+}],
+"loop": true,
+"name": &"float",
+"speed": 3.0
+}]
+
+[node name="HealingEffect" type="AnimatedSprite2D"]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_338o0")
+animation = &"float"
+frame_progress = 0.7796137
+script = ExtResource("2_6cojb")

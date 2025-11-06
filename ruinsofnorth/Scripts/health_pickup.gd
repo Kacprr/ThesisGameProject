@@ -1,7 +1,7 @@
 extends Area2D
 class_name HealthPickup
 
-@export var healing_amount: int = 1
+@export var healing_amount: int = 10
 @export var audio_stream: AudioStream = preload("res://Assets/sounds/power_up.wav")
 
 @onready var audio_player: AudioStreamPlayer2D = $AudioPlayer

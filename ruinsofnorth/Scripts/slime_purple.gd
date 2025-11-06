@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const speed = 85
+const speed = 80
 const PATROL_BOUNCE_FORCE = -100.0
 const BOUNCE_FORCE = -1000.0
 const KNOCKBACK_DECEL = 500
@@ -9,11 +9,11 @@ const KNOCKBACK_DECEL = 500
 var initial_position: Vector2
 const RESPAWN_TIME: float = 5.0 #seconds
 
-@export var health: int = 3
+@export var health: int = 5
 @export var attack_cooldown = 0.5
 
 
-var max_health = 3
+var max_health = 5
 var direction
 var is_knocked_back = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -97,7 +97,7 @@ func _on_damage_area_body_entered(body):
 		if body.has_method("take_damage"):
 			state = State.ATTACKING
 			can_attack = false
-			body.take_damage(1)
+			body.take_damage(12)
 			attack_timer.start()
 
 func take_damage(amount, knockback_vector: Vector2 = Vector2.ZERO):

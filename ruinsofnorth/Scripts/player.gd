@@ -14,6 +14,7 @@ var hot_heal_amount = 0
 const ATTACK_COOLDOWN = 0.4 # cooldown time in sec
 const JUMP_VELOCITY = -300.0
 const GAME_OVER_SCENE = preload("res://Scenes/game_over.tscn")
+const HEALING_EFFECT_SCENE = preload("res://Scenes/healing_effect.tscn")
 
 const max_stamina = 100
 const dash_cost = 30
@@ -210,7 +211,17 @@ func apply_knockback(stun_duration: float):
 
 func heal(amount: int):
 	health = min(health + amount, 100)
+	show_instant_heal_effect(0.5)
 	emit_signal("health_changed", health)
+
+func show_instant_heal_effect(duration: float):
+	var instant_visual = HEALING_EFFECT_SCENE.instantiate()
+	add_child(instant_visual)
+	instant_visual.position = Vector2(0, -25)
+	instant_visual.name = "InstantVisual" + str(randf())
+	
+	if instant_visual.has_method("start_animation"):
+		instant_visual.start_animation(duration)
 	
 func start_heal_over_time(heal_amount: int, duration: float):
 	if is_healing_over_time:
@@ -218,9 +229,15 @@ func start_heal_over_time(heal_amount: int, duration: float):
 	is_healing_over_time = true
 	hot_heal_amount = heal_amount
 	
-	if animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("healing"):
-		animated_sprite.play("healing")
-		
+	var healing_effect = HEALING_EFFECT_SCENE.instantiate()
+	add_child(healing_effect)
+	healing_effect.position = Vector2(0, -25)
+	healing_effect.name = "HoTVisual"
+	healing_effect.start_animation()
+	
+	if healing_effect.has_method("start_animation"):
+		healing_effect.start_animation(duration)
+	
 	hot_tick_timer.wait_time = 1.0
 	hot_tick_timer.start()
 	
@@ -231,6 +248,10 @@ func stop_heal_over_time():
 	is_healing_over_time = false
 	hot_heal_amount = 0
 	hot_tick_timer.stop()
+	
+	var visual_effect = get_node_or_null("HoTVisual")
+	if is_instance_valid(visual_effect):
+		visual_effect.queue_free()
 	
 	if current_State == PlayerState.IDLE:
 		animated_sprite.play("idle")
