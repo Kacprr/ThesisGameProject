@@ -12,9 +12,9 @@ const KNOCKBACK_UP_MULTIPLIER: float = 0.5
 
 func _ready():
 	connect("body_entered", Callable(self, "_on_body_entered"))
-	_animated_sprite.play("new_animation")
-	# Auto-destroy after 0.5 seconds even if it misses
-	await get_tree().create_timer(0.5).timeout
+	_animated_sprite.visible = false
+	# Auto-destroy after 0.4 seconds even if it misses
+	await get_tree().create_timer(0.4).timeout
 	queue_free()
 
 func _on_body_entered(body: Node2D) -> void:

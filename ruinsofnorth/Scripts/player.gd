@@ -3,15 +3,18 @@ extends CharacterBody2D
 @export var speed: int = 120
 @export var health: int = 100
 
-var is_invulnerable = false
+var is_healing_over_time = false
 var can_attack = true
+var is_dead = false
+var is_invulnerable = false
+var has_air_dashed: bool = false
+
+var current_stamina = max_stamina
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 var direction_var = 0
-var current_stamina = max_stamina
-var is_healing_over_time = false
 var hot_heal_amount = 0
 
-const ATTACK_COOLDOWN = 0.4 # cooldown time in sec
+const ATTACK_COOLDOWN = 0.7 # cooldown time in sec
 const JUMP_VELOCITY = -300.0
 const GAME_OVER_SCENE = preload("res://Scenes/game_over.tscn")
 const HEALING_EFFECT_SCENE = preload("res://Scenes/healing_effect.tscn")
@@ -26,6 +29,7 @@ enum PlayerState {
 	DASH,
 	RUN,
 	STUNNED,
+	ATTACK,
 }
 
 var current_State
@@ -49,7 +53,7 @@ func _ready():
 	add_to_group("Player")
 	attack_cooldown_timer.wait_time = ATTACK_COOLDOWN
 	attack_cooldown_timer.one_shot = true
-
+	animated_sprite.animation_finished.connect(_on_attack_animation_finished)
 
 func _physics_process(_delta: float) -> void:
 	const DASH_SPEED = 200.0
@@ -59,14 +63,14 @@ func _physics_process(_delta: float) -> void:
 	if direction != 0:
 		direction_var = direction
 	
-	if current_stamina < max_stamina:
-		current_stamina = min(current_stamina + stamina_regen * _delta, max_stamina)
-		emit_signal("stamina_changed", current_stamina) # Stamina signal
-	
 	if current_State == PlayerState.STUNNED:
 		velocity.y += gravity * _delta
 		move_and_slide()
 		return
+	
+	if current_stamina < max_stamina:
+		current_stamina = min(current_stamina + stamina_regen * _delta, max_stamina)
+		emit_signal("stamina_changed", current_stamina) # Stamina signal
 	
 	# Add the gravity.
 	if !is_on_floor():
@@ -76,7 +80,8 @@ func _physics_process(_delta: float) -> void:
 	# --- JUMP/DOUBLE JUMP LOGIC ---
 	if is_on_floor():
 		jumps_left = 1
-		if current_State != PlayerState.DASH:
+		has_air_dashed = false
+		if current_State != PlayerState.DASH and current_State != PlayerState.ATTACK:
 			current_State = PlayerState.IDLE #Resets state when landing.
 
 	# Handle jump.
@@ -100,14 +105,23 @@ func _physics_process(_delta: float) -> void:
 			velocity.y *= 0.5
 
 	# Handle dash
-	if Input.is_action_just_pressed("dash") and is_on_floor() and current_stamina >= dash_cost and current_State != PlayerState.DASH and direction:
-		current_stamina -= dash_cost
-		current_State = PlayerState.DASH
-		var active_direction = direction
-		$DashTimer.start()
-		direction = active_direction
-		velocity.x = direction * DASH_SPEED
-		dash_sound.play()
+	if Input.is_action_just_pressed("dash") and current_stamina >= dash_cost and current_State != PlayerState.DASH and direction:
+		var is_ground_dash_available = is_on_floor()
+		var is_air_dash_available = !is_on_floor() and !has_air_dashed
+		
+		if is_ground_dash_available or is_air_dash_available:
+			current_stamina -= dash_cost
+			emit_signal("stamina_changed", current_stamina)
+			
+			if is_air_dash_available:
+				has_air_dashed = true
+		
+			current_State = PlayerState.DASH
+			var active_direction = direction
+			$DashTimer.start()
+			direction = active_direction
+			velocity.x = direction * DASH_SPEED
+			dash_sound.play()
 		
 	if current_State != PlayerState.DASH:
 		# Flip the Sprite
@@ -118,17 +132,20 @@ func _physics_process(_delta: float) -> void:
 	
 		# Apply Movement
 		if direction:
-			if is_on_floor():
+			if is_on_floor() and current_State != PlayerState.ATTACK:
 				current_State = PlayerState.RUN
 			velocity.x = direction * speed
 		else:
-			current_State = PlayerState.IDLE
-			velocity.x = move_toward(velocity.x, 0, speed)
+			if current_State != PlayerState.ATTACK:
+				current_State = PlayerState.IDLE
+				velocity.x = move_toward(velocity.x, 0, speed)
 
 	move_and_slide()
 
 	# Play Animations based on the current_state
-	if current_State == PlayerState.DASH:
+	if animated_sprite.is_playing() and animated_sprite.animation == "attack":
+		return
+	elif current_State == PlayerState.DASH:
 		animated_sprite.play("dash")
 	elif !is_on_floor():
 		animated_sprite.play("jump")
@@ -139,16 +156,22 @@ func _physics_process(_delta: float) -> void:
 			animated_sprite.play("run")
 
 func _unhandled_input(event):
+	if is_dead:
+		return
+	
 	if event.is_action_pressed("attack") and can_attack:
 		spawn_attack()
 
 func spawn_attack():
+	current_State = PlayerState.ATTACK
+	animated_sprite.play("attack")
+	
 	can_attack = false
 	attack_cooldown_timer.start()
 	
 	var attack = attack_scene.instantiate()
 	# Flip position based on facing direction
-	var offset = Vector2(15, -5)
+	var offset = Vector2(10, -5)
 	if animated_sprite.flip_h:
 		offset.x *= -1
 		attack.set_flip()
@@ -167,7 +190,7 @@ func _on_dash_timer_timeout() -> void:
 func die():
 	set_process_input(false)
 	set_physics_process(false)
-	
+	animated_sprite.stop()
 	animated_sprite.play("die")
 	
 	$CollisionShape2D.set_deferred("disabled", true)
@@ -188,11 +211,12 @@ func take_damage(amount, _knockback = Vector2.ZERO):
 	is_invulnerable = true
 	modulate = Color(1, 0.5, 0.5) # Red tint
 	$InvulnTimer.start()
-
 	
 	apply_knockback(0.15)
 
 	if health <= 0:
+		is_dead = true
+		current_State = PlayerState.IDLE
 		die()
 		
 func apply_vertical_velocity(force: float):
@@ -258,6 +282,10 @@ func stop_heal_over_time():
 	elif current_State == PlayerState.RUN:
 		animated_sprite.play("run")
 		
+func _on_attack_animation_finished():
+	if animated_sprite.animation == "attack":
+		current_State = PlayerState.IDLE
+
 func _on_hot_tick_timer_timeout() -> void:
 	if is_healing_over_time:
 		heal(hot_heal_amount)
