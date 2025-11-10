@@ -15,7 +15,7 @@ var direction_var = 0
 var hot_heal_amount = 0
 
 const ATTACK_COOLDOWN = 0.7 # cooldown time in sec
-const JUMP_VELOCITY = -250.0
+const JUMP_VELOCITY = -250.0 # Nerfed due to new dash feature!
 const GAME_OVER_SCENE = preload("res://Scenes/game_over.tscn")
 const HEALING_EFFECT_SCENE = preload("res://Scenes/healing_effect.tscn")
 
@@ -96,14 +96,19 @@ func _physics_process(_delta: float) -> void:
 	# -- 2. WALL CLING LOGIC --
 	var wall_cling_input = is_on_wall() and direction_x != 0 and !is_on_floor()
 	
-	if wall_cling_input:
+	if wall_cling_input and current_State != PlayerState.DASH:
 		if current_stamina > 0:
 			current_State = PlayerState.WALL_CLING
 			# Consume stamina
 			var cost = WALL_CLING_COST_PER_SEC * _delta
 			current_stamina = max(current_stamina - cost, 0.0)
 			emit_signal("stamina_changed", current_stamina)
+			
+			if current_stamina <= 0.0:
+				current_State = PlayerState.JUMP
+				
 			# Slide Physics
+		if current_State == PlayerState.WALL_CLING:
 			velocity.y = min(velocity.y, WALL_SLIDE_SPEED)
 			velocity.x = 0
 			animated_sprite.flip_h = (direction_x < 0)
