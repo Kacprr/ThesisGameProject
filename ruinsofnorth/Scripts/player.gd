@@ -15,9 +15,13 @@ var direction_var = 0
 var hot_heal_amount = 0
 
 const ATTACK_COOLDOWN = 0.7 # cooldown time in sec
-const JUMP_VELOCITY = -300.0
+const JUMP_VELOCITY = -250.0
 const GAME_OVER_SCENE = preload("res://Scenes/game_over.tscn")
 const HEALING_EFFECT_SCENE = preload("res://Scenes/healing_effect.tscn")
+
+const WALL_SLIDE_SPEED = 30.0
+const WALL_CLING_COST_PER_SEC = 20.0
+const WALL_JUMP_FORCE = 300.0 # Horizontal force for wall jump
 
 const max_stamina = 100
 const dash_cost = 30
@@ -30,6 +34,7 @@ enum PlayerState {
 	RUN,
 	STUNNED,
 	ATTACK,
+	WALL_CLING,
 }
 
 var current_State
@@ -58,54 +63,58 @@ func _ready():
 func _physics_process(_delta: float) -> void:
 	const DASH_SPEED = 200.0
 	
-	# Get the input direction: -1, 0 ,1
-	var direction := Input.get_axis("move_left", "move_right")
+	# New: Full 4-Way Direction Vectors
+	var direction_x = Input.get_axis("move_left", "move_right")
+	var direction_y = Input.get_axis("move_up", "move_down")
+	var direction: float = direction_x
 	if direction != 0:
-		direction_var = direction
+		direction_var = sign(direction)
 	
+	# Calculates the normalized vector (up, down, diagonal)
+	var dash_vector = Vector2(direction_x, direction_y).normalized()
+	var is_dash_input = dash_vector.length_squared() > 0.01 # True if ANY direction key is held
+
+
+	# -- 1. CORE STATE LOCKS & GRAVITY --
 	if current_State == PlayerState.STUNNED:
 		velocity.y += gravity * _delta
 		move_and_slide()
 		return
-	
+
+	# Add the gravity.
+	if !is_on_floor():
+		if current_State != PlayerState.DASH and current_State != PlayerState.WALL_CLING:
+				current_State = PlayerState.JUMP
+		if current_State != PlayerState.DASH:
+			velocity.y += gravity * _delta
+
 	if current_stamina < max_stamina:
 		current_stamina = min(current_stamina + stamina_regen * _delta, max_stamina)
 		emit_signal("stamina_changed", current_stamina) # Stamina signal
+
+
+	# -- 2. WALL CLING LOGIC --
+	var wall_cling_input = is_on_wall() and direction_x != 0 and !is_on_floor()
 	
-	# Add the gravity.
-	if !is_on_floor():
-		if current_State != PlayerState.DASH:
-			current_State = PlayerState.JUMP
-		velocity.y += gravity * _delta
-	# --- JUMP/DOUBLE JUMP LOGIC ---
-	if is_on_floor():
-		jumps_left = 1
-		has_air_dashed = false
-		if current_State != PlayerState.DASH and current_State != PlayerState.ATTACK:
-			current_State = PlayerState.IDLE #Resets state when landing.
-
-	# Handle jump.
-	if is_on_floor():
-		if Input.is_action_just_pressed("jump"):
-			current_State = PlayerState.JUMP
-			velocity.y = JUMP_VELOCITY
-			jump_sound.play()
-
-	# Handle double-jump
-	elif Input.is_action_just_pressed("jump") and jumps_left > 0:
-		current_State = PlayerState.JUMP
-		velocity.y = JUMP_VELOCITY
-		jumps_left -= 1  #Decrement the counter!
-		jump_sound.play()
-
-	# Handle short jump
-	else:
-		if Input.is_action_just_released("jump"):
-			current_State = PlayerState.JUMP
-			velocity.y *= 0.5
-
-	# Handle dash
-	if Input.is_action_just_pressed("dash") and current_stamina >= dash_cost and current_State != PlayerState.DASH and direction:
+	if wall_cling_input:
+		if current_stamina > 0:
+			current_State = PlayerState.WALL_CLING
+			# Consume stamina
+			var cost = WALL_CLING_COST_PER_SEC * _delta
+			current_stamina = max(current_stamina - cost, 0.0)
+			emit_signal("stamina_changed", current_stamina)
+			# Slide Physics
+			velocity.y = min(velocity.y, WALL_SLIDE_SPEED)
+			velocity.x = 0
+			animated_sprite.flip_h = (direction_x < 0)
+		else:
+			current_State = PlayerState.JUMP # Fall if stamina is zero
+			
+	elif current_State == PlayerState.WALL_CLING and (!wall_cling_input or is_on_floor()):
+		current_State = PlayerState.JUMP # Stop cling if input or wall is lost
+		
+	# -- 3. DASH LOGIC --
+	if Input.is_action_just_pressed("dash") and current_stamina >= dash_cost and current_State != PlayerState.DASH and is_dash_input:
 		var is_ground_dash_available = is_on_floor()
 		var is_air_dash_available = !is_on_floor() and !has_air_dashed
 		
@@ -117,21 +126,54 @@ func _physics_process(_delta: float) -> void:
 				has_air_dashed = true
 		
 			current_State = PlayerState.DASH
-			var active_direction = direction
 			$DashTimer.start()
-			direction = active_direction
-			velocity.x = direction * DASH_SPEED
+			velocity = dash_vector * DASH_SPEED
 			dash_sound.play()
-		
-	if current_State != PlayerState.DASH:
+			move_and_slide()
+			return
+
+	# --- 4. JUMP/DOUBLE JUMP LOGIC ---
+	if is_on_floor():
+		jumps_left = 1
+		has_air_dashed = false
+		if current_State != PlayerState.DASH and current_State != PlayerState.ATTACK:
+			current_State = PlayerState.IDLE #Resets state when landing.
+	
+	# Horizontal Movement Application (Only if NOT DASHING or CLINGING)
+	if current_State != PlayerState.DASH and current_State != PlayerState.WALL_CLING:
+		# Handle jump.
+		if is_on_floor():
+			if Input.is_action_just_pressed("jump"):
+				current_State = PlayerState.JUMP
+				velocity.y = JUMP_VELOCITY
+				jump_sound.play()
+
+		# Handle double-jump
+		elif Input.is_action_just_pressed("jump") and jumps_left > 0:
+			current_State = PlayerState.JUMP
+			velocity.y = JUMP_VELOCITY
+			jumps_left -= 1  #Decrement the counter!
+			jump_sound.play()
+
+		# Handle short jump
+		else:
+			if Input.is_action_just_released("jump"):
+				current_State = PlayerState.JUMP
+				velocity.y *= 0.5
+
 		# Flip the Sprite
 		if direction > 0:
 			animated_sprite.flip_h = false
 		elif direction < 0:
 			animated_sprite.flip_h = true
+		elif direction == 0:
+			if direction_var > 0:
+				animated_sprite.flip_h = false
+			elif direction_var < 0:
+				animated_sprite.flip_h = true
 	
-		# Apply Movement
-		if direction:
+		# Apply Horizontal Movement
+		if direction_x:
 			if is_on_floor() and current_State != PlayerState.ATTACK:
 				current_State = PlayerState.RUN
 			velocity.x = direction * speed
@@ -139,7 +181,6 @@ func _physics_process(_delta: float) -> void:
 			if current_State != PlayerState.ATTACK:
 				current_State = PlayerState.IDLE
 				velocity.x = move_toward(velocity.x, 0, speed)
-
 	move_and_slide()
 
 	# Play Animations based on the current_state
@@ -147,6 +188,8 @@ func _physics_process(_delta: float) -> void:
 		return
 	elif current_State == PlayerState.DASH:
 		animated_sprite.play("dash")
+	elif current_State == PlayerState.WALL_CLING:
+		animated_sprite.play("jump") # Temporary using the jump animation.
 	elif !is_on_floor():
 		animated_sprite.play("jump")
 	elif is_on_floor():
