@@ -110,7 +110,9 @@ func _physics_process(_delta: float) -> void:
 			# Slide Physics
 		if current_State == PlayerState.WALL_CLING:
 			velocity.y = min(velocity.y, WALL_SLIDE_SPEED)
-			velocity.x = 0
+			if (Input.is_action_just_pressed("jump")):
+				velocity.y = JUMP_VELOCITY
+				current_State = PlayerState.JUMP
 			animated_sprite.flip_h = (direction_x < 0)
 		else:
 			current_State = PlayerState.JUMP # Fall if stamina is zero
