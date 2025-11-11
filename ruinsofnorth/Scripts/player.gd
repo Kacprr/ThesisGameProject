@@ -113,6 +113,7 @@ func _physics_process(_delta: float) -> void:
 			if (Input.is_action_just_pressed("jump")):
 				velocity.y = JUMP_VELOCITY
 				current_State = PlayerState.JUMP
+				jump_sound.play()
 			animated_sprite.flip_h = (direction_x < 0)
 		else:
 			current_State = PlayerState.JUMP # Fall if stamina is zero
