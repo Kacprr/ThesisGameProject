@@ -26,7 +26,12 @@ func _ready() -> void:
 	if player:
 		if player.is_connected("stamina_changed", Callable(self, "_on_player_stamina_changed")) == false:
 			player.connect("stamina_changed", Callable(self, "_on_player_stamina_changed"))
-	
+		
+		if player.is_connected("max_health_changed", Callable(self, "_on_player_max_health_changed")) == false:
+			player.connect("max_health_changed", Callable(self, "_on_player_max_health_changed"))
+		if player.is_connected("max_stamina_changed", Callable(self, "_on_player_max_stamina_changed")) == false:
+			player.connect("max_stamina_changed", Callable(self, "_on_player_max_stamina_changed"))
+			
 	if _pending_max_health >= 0:
 		set_max_health(_pending_max_health)
 		_pending_max_health = -1
@@ -49,17 +54,24 @@ func _exit_tree() -> void:
 		_health_tween.kill()
 
 func set_max_health(value: int) -> void:
-	if _is_quitting:
-		return
-	if not is_inside_tree() or health_bar == null:
-		_pending_max_health = value
+	if _is_quitting or not is_inside_tree() or health_bar == null:
 		return
 	max_health = max(value, 1)
-	health_bar.max_value = max_health
-	health_bar.value = clampi(health_bar.value, 0, max_health)
+	health_bar.max_value = float(max_health)
+	health_bar.value = float(max_health)
 	
 	if is_inside_tree() and hp_number_label:
-		hp_number_label.text = str(clampi(health_bar.value, 0, max_health))
+		hp_number_label.text = str(max_health)
+		
+func set_max_stamina(value: int) -> void:
+	if _is_quitting or not is_inside_tree() or stamina_bar == null:
+		return
+	max_stamina = max(value, 1)
+	stamina_bar.max_value = float(max_stamina)
+	stamina_bar.value = float(max_stamina)
+	
+	if is_inside_tree() and stamina_number_label:
+		stamina_number_label.text = str(max_stamina)
 
 func update_health(value: int) -> void:
 	if _is_quitting:
@@ -98,6 +110,15 @@ func update_stamina(value: float) -> void:
 func _on_player_stamina_changed(stamina: float) -> void:
 	update_stamina(stamina)
 
+func _on_player_health_changed(health: Variant) -> void:
+	update_health(int(health))
+	
+func _on_player_max_health_changed(new_max_health: int) -> void:
+	set_max_health(new_max_health)
+	
+func _on_player_max_stamina_changed(new_max_stamina: int) -> void:
+	set_max_stamina(new_max_stamina)
+
 func update_score(score: int) -> void:
 	if _is_quitting:
 		return
@@ -105,6 +126,3 @@ func update_score(score: int) -> void:
 		_pending_score = score
 		return
 	score_label.text = str(score)
-
-func _on_player_health_changed(health: Variant) -> void:
-	update_health(int(health))

@@ -1,0 +1,106 @@
+[gd_scene load_steps=17 format=3 uid="uid://dhshsl0xesi0t"]
+
+[ext_resource type="Script" uid="uid://mcjdohclshao" path="res://Scripts/stat_collectible.gd" id="1_4nij7"]
+[ext_resource type="Texture2D" uid="uid://dwd8qw1qbpu6y" path="res://Assets/sprites/heart_pickup.png" id="2_f5u5s"]
+[ext_resource type="AudioStream" uid="uid://dk2dgbm4sstw" path="res://Assets/sounds/power_up.wav" id="2_x51r8"]
+[ext_resource type="Texture2D" uid="uid://bfc14s5w6w44k" path="res://Assets/sprites/Stamina_pickup.png" id="3_ddqna"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddqna"]
+atlas = ExtResource("2_f5u5s")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wktji"]
+atlas = ExtResource("2_f5u5s")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5aps"]
+atlas = ExtResource("2_f5u5s")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7kt4"]
+atlas = ExtResource("2_f5u5s")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4nij7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddqna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wktji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5aps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7kt4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wktji"]
+radius = 6.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llwa6"]
+atlas = ExtResource("3_ddqna")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3a31n"]
+atlas = ExtResource("3_ddqna")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anort"]
+atlas = ExtResource("3_ddqna")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28l2p"]
+atlas = ExtResource("3_ddqna")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x51r8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llwa6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3a31n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anort")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28l2p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4rqxq"]
+radius = 7.0
+
+[node name="StatCollectibleContainer" type="Node2D"]
+script = ExtResource("1_4nij7")
+
+[node name="HealthCollectibleArea" type="Area2D" parent="."]
+
+[node name="HealthSprite" type="AnimatedSprite2D" parent="HealthCollectibleArea"]
+sprite_frames = SubResource("SpriteFrames_4nij7")
+
+[node name="HealthCollision" type="CollisionShape2D" parent="HealthCollectibleArea"]
+shape = SubResource("CircleShape2D_wktji")
+
+[node name="StaminaCollectibleArea" type="Area2D" parent="."]
+
+[node name="StaminaSprite" type="AnimatedSprite2D" parent="StaminaCollectibleArea"]
+sprite_frames = SubResource("SpriteFrames_x51r8")
+
+[node name="StaminaCollision" type="CollisionShape2D" parent="StaminaCollectibleArea"]
+shape = SubResource("CircleShape2D_4rqxq")
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_x51r8")
