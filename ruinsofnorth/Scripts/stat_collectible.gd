@@ -23,13 +23,10 @@ func _ready():
 	health_area.visible = false
 	stamina_area.visible = false
 	
-	# 2. Find the Player (assuming this is placed near the player/chest)
 	var player = get_tree().get_first_node_in_group("Player")
 	
 	if player:
 		process_upgrade_choice(player)
-	
-	# 3. Queue free immediately after spawning, the process_upgrade handles effects.
 	queue_free()
 
 func process_upgrade_choice(player: CharacterBody2D):

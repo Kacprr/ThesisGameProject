@@ -24,11 +24,15 @@ func _ready() -> void:
 	
 	var player = get_node_or_null("../Player")
 	if player:
+		if player.is_connected("health_changed", Callable(self, "_on_player_health_changed")) == false:
+			player.connect("health_changed", Callable(self, "_on_player_health_changed"))
+			
 		if player.is_connected("stamina_changed", Callable(self, "_on_player_stamina_changed")) == false:
 			player.connect("stamina_changed", Callable(self, "_on_player_stamina_changed"))
 		
 		if player.is_connected("max_health_changed", Callable(self, "_on_player_max_health_changed")) == false:
 			player.connect("max_health_changed", Callable(self, "_on_player_max_health_changed"))
+			
 		if player.is_connected("max_stamina_changed", Callable(self, "_on_player_max_stamina_changed")) == false:
 			player.connect("max_stamina_changed", Callable(self, "_on_player_max_stamina_changed"))
 			
@@ -58,7 +62,9 @@ func set_max_health(value: int) -> void:
 		return
 	max_health = max(value, 1)
 	health_bar.max_value = float(max_health)
-	health_bar.value = float(max_health)
+	
+	if health_bar.value > max_health:
+		health_bar.value = float(max_health)
 	
 	if is_inside_tree() and hp_number_label:
 		hp_number_label.text = str(max_health)

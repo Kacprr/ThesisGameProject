@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 @export var speed: int = 120
-@export var health: int = 100
+@export var max_health: int = 100
+var health: int
 
 var is_healing_over_time = false
 var can_attack = true
@@ -61,6 +62,10 @@ func _ready():
 	attack_cooldown_timer.wait_time = ATTACK_COOLDOWN
 	attack_cooldown_timer.one_shot = true
 	animated_sprite.animation_finished.connect(_on_attack_animation_finished)
+	
+	health = max_health
+	emit_signal("health_changed", health)
+	emit_signal("max_health_changed", max_health)
 
 func _physics_process(_delta: float) -> void:
 	const DASH_SPEED = 130.0
@@ -288,7 +293,7 @@ func apply_knockback(stun_duration: float):
 	knockback_timer.start()
 
 func heal(amount: int):
-	health = min(health + amount, health)
+	health = min(health + amount, max_health)
 	show_instant_heal_effect(0.5)
 	emit_signal("health_changed", health)
 
@@ -337,11 +342,10 @@ func stop_heal_over_time():
 		animated_sprite.play("run")
 		
 func upgrade_max_health(bonus: int):
-	var old_current_health = health
-	var new_max = old_current_health + bonus
-	health = new_max
-	emit_signal("max_health_changed", new_max)
-	emit_signal("health_changed", new_max)
+	max_health += bonus
+	health = max_health
+	emit_signal("max_health_changed", max_health)
+	emit_signal("health_changed", health)
 
 func upgrade_max_stamina(bonus: int):
 	var new_max = max_stamina + bonus
