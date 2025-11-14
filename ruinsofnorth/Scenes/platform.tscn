@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://rsp58sktc00u"]
 
-[ext_resource type="Texture2D" uid="uid://18mmldkjwgpq" path="res://Assets/sprites/platforms.png" id="1_1rc8e"]
+[ext_resource type="Texture2D" uid="uid://yrfb0qgaxkgj" path="res://Assets/tile_layers/Dungeon Tile Set/Dungeon Tile Set.png" id="1_1rc8e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1rc8e"]
-size = Vector2(32, 8)
+size = Vector2(40, 10)
 
 [node name="Platform" type="AnimatableBody2D"]
 collision_layer = 8
@@ -11,7 +11,7 @@ collision_layer = 8
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_1rc8e")
 region_enabled = true
-region_rect = Rect2(17, 0, 31, 9)
+region_rect = Rect2(15.997443, 16.011599, 38.912506, 9.283987)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1rc8e")
