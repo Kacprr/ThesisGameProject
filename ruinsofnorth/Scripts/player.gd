@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 @export var speed: int = 120
-@export var health: int = 100
+@export var max_health: int = 100
+var health: int
 
 var is_healing_over_time = false
 var can_attack = true
@@ -9,7 +10,6 @@ var is_dead = false
 var is_invulnerable = false
 var has_air_dashed: bool = false
 
-var current_stamina = max_stamina
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 var direction_var = 0
 var hot_heal_amount = 0
@@ -23,9 +23,10 @@ const WALL_SLIDE_SPEED = 30.0
 const WALL_CLING_COST_PER_SEC = 20.0
 const WALL_JUMP_FORCE = 300.0 # Horizontal force for wall jump
 
-const max_stamina = 100
-const dash_cost = 30
-const stamina_regen = 10.0
+var max_stamina = 100
+var current_stamina: float = max_stamina
+var dash_cost = 25
+var stamina_regen = 10.0
 
 enum PlayerState {
 	IDLE,
@@ -43,6 +44,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 signal health_changed(health)
 signal stamina_changed(stamina)
+signal max_health_changed(new_max_health)
+signal max_stamina_changed(new_max_stamina)
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_scene = preload("res://scenes/Attack.tscn")
@@ -59,9 +62,13 @@ func _ready():
 	attack_cooldown_timer.wait_time = ATTACK_COOLDOWN
 	attack_cooldown_timer.one_shot = true
 	animated_sprite.animation_finished.connect(_on_attack_animation_finished)
+	
+	health = max_health
+	emit_signal("health_changed", health)
+	emit_signal("max_health_changed", max_health)
 
 func _physics_process(_delta: float) -> void:
-	const DASH_SPEED = 200.0
+	const DASH_SPEED = 130.0
 	
 	# New: Full 4-Way Direction Vectors
 	var direction_x = Input.get_axis("move_left", "move_right")
@@ -110,7 +117,11 @@ func _physics_process(_delta: float) -> void:
 			# Slide Physics
 		if current_State == PlayerState.WALL_CLING:
 			velocity.y = min(velocity.y, WALL_SLIDE_SPEED)
-			velocity.x = 0
+			if (Input.is_action_just_pressed("jump")):
+				velocity.y = JUMP_VELOCITY
+				current_State = PlayerState.JUMP
+				current_stamina -= 10
+				jump_sound.play()
 			animated_sprite.flip_h = (direction_x < 0)
 		else:
 			current_State = PlayerState.JUMP # Fall if stamina is zero
@@ -282,7 +293,7 @@ func apply_knockback(stun_duration: float):
 	knockback_timer.start()
 
 func heal(amount: int):
-	health = min(health + amount, 100)
+	health = min(health + amount, max_health)
 	show_instant_heal_effect(0.5)
 	emit_signal("health_changed", health)
 
@@ -330,6 +341,19 @@ func stop_heal_over_time():
 	elif current_State == PlayerState.RUN:
 		animated_sprite.play("run")
 		
+func upgrade_max_health(bonus: int):
+	max_health += bonus
+	health = max_health
+	emit_signal("max_health_changed", max_health)
+	emit_signal("health_changed", health)
+
+func upgrade_max_stamina(bonus: int):
+	var new_max = max_stamina + bonus
+	max_stamina = new_max
+	current_stamina = float(new_max)
+	emit_signal("max_stamina_changed", new_max)
+	emit_signal("stamina_changed", current_stamina)
+
 func _on_attack_animation_finished():
 	if animated_sprite.animation == "attack":
 		current_State = PlayerState.IDLE
