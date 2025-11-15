@@ -33,13 +33,15 @@ script = ExtResource("1_ij4ji")
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(-3, 0)
 scale = Vector2(0.6465518, 0.70480627)
-polygon = PackedVector2Array(-1.5466666, -8.512978, 4.64, 0, -7.733333, 4.256489, 4.64, 5.6753187, 13.92, 0, 9.28, -5.6753187)
+polygon = PackedVector2Array(-4.64, -12.769467, 1.5466666, 0, -6.186666, 9.9318075, 10.826666, 8.512978, 26.293331, 0, 12.373333, -8.512978)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-6, 0)
 scale = Vector2(0.55, 0.43999997)
 sprite_frames = SubResource("SpriteFrames_ds7qa")
 animation = &"new_animation"
+frame = 1
+frame_progress = 0.65958714
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false

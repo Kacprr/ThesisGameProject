@@ -14,7 +14,7 @@ var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 var direction_var = 0
 var hot_heal_amount = 0
 
-const ATTACK_COOLDOWN = 0.7 # cooldown time in sec
+const ATTACK_COOLDOWN = 0.3 # cooldown time in sec
 const JUMP_VELOCITY = -250.0 # Nerfed due to new dash feature!
 const GAME_OVER_SCENE = preload("res://Scenes/game_over.tscn")
 const HEALING_EFFECT_SCENE = preload("res://Scenes/healing_effect.tscn")
@@ -82,25 +82,24 @@ func _physics_process(_delta: float) -> void:
 	var is_dash_input = dash_vector.length_squared() > 0.01 # True if ANY direction key is held
 
 
-	# -- 1. CORE STATE LOCKS & GRAVITY --
+# -- 1. CORE STATE LOCKS & GRAVITY --
 	if current_State == PlayerState.STUNNED:
 		velocity.y += gravity * _delta
 		move_and_slide()
 		return
 
-	# Add the gravity.
+# Add the gravity.
 	if !is_on_floor():
 		if current_State != PlayerState.DASH and current_State != PlayerState.WALL_CLING:
 				current_State = PlayerState.JUMP
 		if current_State != PlayerState.DASH:
 			velocity.y += gravity * _delta
 
-	if current_stamina < max_stamina:
-		current_stamina = min(current_stamina + stamina_regen * _delta, max_stamina)
-		emit_signal("stamina_changed", current_stamina) # Stamina signal
 
+	if current_stamina < max_stamina and Globals.flipped == false:
+		toggle_stamina_regen(true,_delta)
 
-	# -- 2. WALL CLING LOGIC --
+# -- 2. WALL CLING LOGIC --
 	var wall_cling_input = is_on_wall() and direction_x != 0 and !is_on_floor()
 	
 	if wall_cling_input and current_State != PlayerState.DASH:
@@ -129,7 +128,7 @@ func _physics_process(_delta: float) -> void:
 	elif current_State == PlayerState.WALL_CLING and (!wall_cling_input or is_on_floor()):
 		current_State = PlayerState.JUMP # Stop cling if input or wall is lost
 		
-	# -- 3. DASH LOGIC --
+# -- 3. DASH LOGIC --
 	if Input.is_action_just_pressed("dash") and current_stamina >= dash_cost and current_State != PlayerState.DASH and is_dash_input:
 		var is_ground_dash_available = is_on_floor()
 		var is_air_dash_available = !is_on_floor() and !has_air_dashed
@@ -148,7 +147,7 @@ func _physics_process(_delta: float) -> void:
 			move_and_slide()
 			return
 
-	# --- 4. JUMP/DOUBLE JUMP LOGIC ---
+# --- 4. JUMP/DOUBLE JUMP LOGIC ---
 	if is_on_floor():
 		jumps_left = 1
 		has_air_dashed = false
@@ -171,11 +170,12 @@ func _physics_process(_delta: float) -> void:
 			jumps_left -= 1  #Decrement the counter!
 			jump_sound.play()
 
-		# Handle short jump
+	# Handle short jump
 		else:
 			if Input.is_action_just_released("jump"):
 				current_State = PlayerState.JUMP
 				velocity.y *= 0.5
+
 
 		# Flip the Sprite
 		if direction > 0:
@@ -187,17 +187,36 @@ func _physics_process(_delta: float) -> void:
 				animated_sprite.flip_h = false
 			elif direction_var < 0:
 				animated_sprite.flip_h = true
-	
+
 		# Apply Horizontal Movement
 		if direction_x:
-			if is_on_floor() and current_State != PlayerState.ATTACK:
+			if is_on_floor():
 				current_State = PlayerState.RUN
 			velocity.x = direction * speed
 		else:
-			if current_State != PlayerState.ATTACK:
 				current_State = PlayerState.IDLE
 				velocity.x = move_toward(velocity.x, 0, speed)
 	move_and_slide()
+
+#--- 5. FLIP MECHANIC CODE
+	if Input.is_action_just_pressed("flip"):
+		if(Globals.flipped == false): 
+			Globals.flipped = true
+			print("flipped")
+			$FlipStaminaTimer.start()
+		else: 
+			Globals.flipped = false
+			print("manual off flip")
+			$FlipStaminaTimer.stop()
+
+	if Globals.flipped == true:
+		toggle_stamina_regen(false,_delta)
+	if current_stamina <= 0:
+		Globals.flipped = false
+		$FlipStaminaTimer.stop()
+		print("auto unflip")
+
+	print(current_stamina)
 
 	# Play Animations based on the current_state
 	if animated_sprite.is_playing() and animated_sprite.animation == "attack":
@@ -238,13 +257,12 @@ func spawn_attack():
 	attack.global_position = global_position + offset
 	get_tree().current_scene.add_child(attack)
 
-
 func _on_attack_cooldown_timer_timeout():
 	can_attack = true
 
-#After dash is complete reseting speed back to base speed and ending dash
 func _on_dash_timer_timeout() -> void:
 	current_State = PlayerState.IDLE
+	#After dash is complete reseting speed back to base speed and ending dash
 
 func die():
 	set_process_input(false)
@@ -277,7 +295,7 @@ func take_damage(amount, _knockback = Vector2.ZERO):
 		is_dead = true
 		current_State = PlayerState.IDLE
 		die()
-		
+
 func apply_vertical_velocity(force: float):
 	velocity.y = force
 	current_State = PlayerState.JUMP
@@ -369,3 +387,13 @@ func _on_invuln_timer_timeout() -> void:
 	
 func _on_knockback_timer_timeout() -> void:
 	current_State = PlayerState.IDLE
+
+func _on_flip_stamina_timer_timeout() -> void:
+	if(current_stamina > 0):
+		current_stamina -= 1
+	emit_signal("stamina_changed", current_stamina)
+
+func toggle_stamina_regen(case, _delta):
+		if (case):
+			current_stamina = min(current_stamina + stamina_regen * _delta, max_stamina)
+			emit_signal("stamina_changed", current_stamina) # Stamina signal
