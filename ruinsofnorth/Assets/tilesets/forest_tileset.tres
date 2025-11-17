@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=5 format=3 uid="uid://2gyr7x74t632"]
 
-[ext_resource type="Texture2D" uid="uid://bgpyxcs077erv" path="res://Assets/tile_layers/Forest Tiles/Enviroment.png" id="1_n03da"]
+[ext_resource type="Texture2D" uid="uid://fclqmitthaj6" path="res://Assets/tile_layers/Forest Tiles/Enviroment.png" id="1_n03da"]
 [ext_resource type="Texture2D" uid="uid://yrfb0qgaxkgj" path="res://Assets/tile_layers/Dungeon Tile Set/Dungeon Tile Set.png" id="2_3f5yx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rfjv2"]
