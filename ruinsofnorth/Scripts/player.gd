@@ -216,7 +216,7 @@ func _physics_process(_delta: float) -> void:
 		$FlipStaminaTimer.stop()
 		print("auto unflip")
 
-	#print(current_stamina)
+	print(current_stamina)
 
 	# Play Animations based on the current_state
 	if animated_sprite.is_playing() and animated_sprite.animation == "attack":
