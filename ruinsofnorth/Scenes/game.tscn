@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=18 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -17,9 +17,6 @@
 [sub_resource type="TileSet" id="TileSet_3dryh"]
 physics_layer_0/collision_layer = 8
 physics_layer_0/collision_mask = 0
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i6g32"]
-distance = -23.0
 
 [sub_resource type="Animation" id="Animation_3dryh"]
 length = 0.001
@@ -107,9 +104,9 @@ limit_smoothed = true
 [node name="Killzone" parent="." instance=ExtResource("5_wowpa")]
 position = Vector2(49, 287)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Killzone"]
 position = Vector2(0, 10)
-shape = SubResource("WorldBoundaryShape2D_i6g32")
+polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3040, 103, 3039, 44, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
 
 [node name="Coins" type="Node" parent="."]
 
