@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=19 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cid2retl512jm" path="res://Scenes/healing_power_up.tscn" id="8_rku1e"]
 [ext_resource type="PackedScene" uid="uid://dwd6xnyrx4mvf" path="res://Scenes/slime_purple.tscn" id="10_ldgsr"]
 [ext_resource type="PackedScene" uid="uid://kn4xf88rr70i" path="res://Scenes/knight_trap.tscn" id="11_o5yvi"]
+[ext_resource type="PackedScene" path="res://Scenes/flip_post_process.tscn" id="12_flip"]
 
 [sub_resource type="TileSet" id="TileSet_3dryh"]
 physics_layer_0/collision_layer = 8
@@ -171,6 +172,8 @@ position = Vector2(-483, 47)
 scale = Vector2(0.8, 0.8)
 collision_layer = 2
 collision_mask = 9
+
+[node name="FlipPostProcess" parent="." instance=ExtResource("12_flip")]
 
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]

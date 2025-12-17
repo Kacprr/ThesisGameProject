@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cid2retl512jm"]
 
-[ext_resource type="Script" uid="uid://dijhskntc5qhe" path="res://healing_power_up.gd" id="1_dqbbw"]
+[ext_resource type="Script" uid="uid://dijhskntc5qhe" path="res://Scripts/healing_power_up.gd" id="1_dqbbw"]
 [ext_resource type="Texture2D" uid="uid://b4il86nip7wul" path="res://Assets/sprites/fruit.png" id="2_h03y6"]
 [ext_resource type="AudioStream" uid="uid://dk2dgbm4sstw" path="res://Assets/sounds/power_up.wav" id="3_4vhdi"]
 

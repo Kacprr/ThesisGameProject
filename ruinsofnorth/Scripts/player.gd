@@ -202,11 +202,11 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("flip"):
 		if(Globals.flipped == false): 
 			Globals.flipped = true
-			print("flipped")
+
 			$FlipStaminaTimer.start()
 		else: 
 			Globals.flipped = false
-			print("manual off flip")
+
 			$FlipStaminaTimer.stop()
 
 	if Globals.flipped == true:
@@ -214,7 +214,7 @@ func _physics_process(_delta: float) -> void:
 	if current_stamina <= 0:
 		Globals.flipped = false
 		$FlipStaminaTimer.stop()
-		print("auto unflip")
+
 
 
 	# Play Animations based on the current_state
