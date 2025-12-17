@@ -97,7 +97,7 @@ tile_set = ExtResource("3_rku1e")
 position = Vector2(-152, 48)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 process_callback = 0
 limit_smoothed = true
 
@@ -106,7 +106,7 @@ position = Vector2(49, 287)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Killzone"]
 position = Vector2(0, 10)
-polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3040, 103, 3039, 44, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
+polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3213, 120, 3526, 3, 4947, 2, 5319, -177, 5921, -180, 5920, -266, 5326, -265, 5045, -248, 4947, -47, 3528, -43, 3213, -41, 3213, 41, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
 
 [node name="Coins" type="Node" parent="."]
 
