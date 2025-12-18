@@ -4,11 +4,20 @@ var paused_var
 
 signal flip_toggled(value)
 
-#This is the global value used to determine if the world has "flipped" or not
-#Used to handle which dimension the player is in
 var flipped = false : set = set_flipped
 
 func set_flipped(value):
 	if flipped != value:
 		flipped = value
 		emit_signal("flip_toggled", flipped)
+
+var current_checkpoint_position = Vector2.ZERO
+var checkpoint_active = false
+
+func update_checkpoint(pos: Vector2):
+	current_checkpoint_position = pos
+	checkpoint_active = true
+
+func reset_checkpoint():
+	checkpoint_active = false
+	current_checkpoint_position = Vector2.ZERO

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=20 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dwd6xnyrx4mvf" path="res://Scenes/slime_purple.tscn" id="10_ldgsr"]
 [ext_resource type="PackedScene" uid="uid://kn4xf88rr70i" path="res://Scenes/knight_trap.tscn" id="11_o5yvi"]
 [ext_resource type="PackedScene" path="res://Scenes/flip_post_process.tscn" id="12_flip"]
+[ext_resource type="PackedScene" uid="uid://ckaxc6l1xgob3" path="res://Scenes/checkpoint.tscn" id="15_nb51f"]
 
 [sub_resource type="TileSet" id="TileSet_3dryh"]
 physics_layer_0/collision_layer = 8
@@ -107,7 +108,7 @@ position = Vector2(49, 287)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Killzone"]
 position = Vector2(0, 10)
-polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3213, 120, 3526, 3, 4947, 2, 5319, -177, 5921, -180, 5920, -266, 5326, -265, 5045, -248, 4947, -47, 3528, -43, 3213, -41, 3213, 41, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
+polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3213, 120, 3526, 3, 4947, 2, 5327, -242, 5920, -239, 5920, -266, 5326, -266, 5039, -248, 4946, -20, 3533, -18, 3533, -41, 3213, -41, 3213, 41, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
 
 [node name="Coins" type="Node" parent="."]
 
@@ -174,6 +175,12 @@ collision_layer = 2
 collision_mask = 9
 
 [node name="FlipPostProcess" parent="." instance=ExtResource("12_flip")]
+
+[node name="Checkpoint" parent="." instance=ExtResource("15_nb51f")]
+position = Vector2(3528, 137)
+
+[node name="Checkpoint2" parent="." instance=ExtResource("15_nb51f")]
+position = Vector2(840, 40)
 
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]

@@ -66,6 +66,9 @@ func _ready():
 	health = max_health
 	emit_signal("health_changed", health)
 	emit_signal("max_health_changed", max_health)
+	
+	if Globals.checkpoint_active:
+		global_position = Globals.current_checkpoint_position
 
 func _physics_process(_delta: float) -> void:
 	const DASH_SPEED = 130.0
