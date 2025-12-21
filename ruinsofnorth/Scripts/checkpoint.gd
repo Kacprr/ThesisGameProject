@@ -1,7 +1,7 @@
 extends Area2D
 
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var collision_shape = $CollisionShape2D
+@onready var label = $Label
 
 var active = false
 
@@ -22,10 +22,22 @@ func activate_checkpoint(_player):
 	active = true
 	Globals.update_checkpoint(global_position)
 	
+	if label:
+		label.visible = true
+	
 	if animated_sprite:
 		var tween = create_tween()
 		tween.set_parallel(true)
+		
+		# Animate Sprite
 		tween.tween_property(animated_sprite, "modulate:a", 0.0, 0.5)
 		tween.tween_property(animated_sprite, "scale", Vector2(0, 0), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+		
+		# Animate Label
+		if label:
+			tween.tween_property(label, "modulate:a", 0.0, 1.0) # Fade out slowly
+			tween.tween_property(label, "position:y", label.position.y - 20, 1.0) # Float up
+		
+		# Wait for the longest animation then delete
 		tween.chain().tween_callback(queue_free)
 		

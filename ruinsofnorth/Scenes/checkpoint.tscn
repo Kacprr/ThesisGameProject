@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://osjivxyo13gk" path="res://Scripts/checkpoint.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://tpqp87bkjpd5" path="res://Assets/sprites/Stamina_pickup.png" id="2_2cwi7"]
+[ext_resource type="FontFile" uid="uid://pixel_font_bold" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_font"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2cwi7"]
 radius = 7.0
@@ -42,6 +43,13 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_check"]
+font = ExtResource("3_font")
+font_size = 8
+font_color = Color(1, 0.9, 0.4, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Checkpoint" type="Area2D"]
 script = ExtResource("1_script")
 
@@ -51,3 +59,14 @@ shape = SubResource("CircleShape2D_2cwi7")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_w8ggu")
 autoplay = "default"
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -80.0
+offset_top = -30.0
+offset_right = 80.0
+offset_bottom = -7.0
+text = "Checkpoint Received!"
+label_settings = SubResource("LabelSettings_check")
+horizontal_alignment = 1
+vertical_alignment = 1

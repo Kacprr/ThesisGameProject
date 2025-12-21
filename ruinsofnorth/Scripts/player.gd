@@ -273,6 +273,10 @@ func die():
 	animated_sprite.play("die")
 	
 	$CollisionShape2D.set_deferred("disabled", true)
+	
+	if Globals.flipped:
+		Globals.flipped = false
+		
 	await get_tree().create_timer(1.0).timeout
 	
 	var game_over_screen = GAME_OVER_SCENE.instantiate()
