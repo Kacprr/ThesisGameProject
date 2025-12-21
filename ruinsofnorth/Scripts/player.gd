@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed: int = 120
 @export var max_health: int = 100
 var health: int
+var keys: int
 
 var is_healing_over_time = false
 var can_attack = true
@@ -403,3 +404,20 @@ func toggle_stamina_regen(case, _delta):
 		if (case):
 			current_stamina = min(current_stamina + stamina_regen * _delta, max_stamina)
 			emit_signal("stamina_changed", current_stamina) # Stamina signal
+
+#--Chest Code--
+func add_keys() -> void:
+	keys += 1
+	print ("key +1")
+
+func has_keys() -> bool:
+	if keys > 0:
+		print("true")
+		return true
+	else: 
+		print("false")
+		return false
+
+func use_keys() -> void:
+	keys -= 1
+	print("key used")

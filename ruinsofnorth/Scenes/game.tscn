@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=28 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://kn4xf88rr70i" path="res://Scenes/knight_trap.tscn" id="11_o5yvi"]
 [ext_resource type="PackedScene" path="res://Scenes/flip_post_process.tscn" id="12_flip"]
 [ext_resource type="PackedScene" uid="uid://ckaxc6l1xgob3" path="res://Scenes/checkpoint.tscn" id="15_nb51f"]
+[ext_resource type="PackedScene" uid="uid://dwwghtyaijg3s" path="res://Scenes/key.tscn" id="19_7nbq1"]
+[ext_resource type="PackedScene" uid="uid://5xl8rn7clshw" path="res://Scenes/chest.tscn" id="20_exi56"]
 
 [sub_resource type="TileSet" id="TileSet_3dryh"]
 physics_layer_0/collision_layer = 8
@@ -1178,6 +1180,12 @@ position = Vector2(3535, 134)
 
 [node name="Checkpoint2" parent="." instance=ExtResource("15_nb51f")]
 position = Vector2(842, 39)
+
+[node name="Key" parent="." instance=ExtResource("19_7nbq1")]
+position = Vector2(-848, 38)
+
+[node name="Chest" parent="." instance=ExtResource("20_exi56")]
+position = Vector2(-790, 31)
 
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]
