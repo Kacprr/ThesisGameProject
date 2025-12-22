@@ -17,6 +17,7 @@ enum UpgradeType { HEALTH, STAMINA }
 
 
 @onready var audio_player: AudioStreamPlayer2D = $AudioPlayer
+@onready var floating_text_scene = preload("res://Scenes/floating_text.tscn")
 
 func _ready():
 	# 1. Hide the visual elements
@@ -39,17 +40,31 @@ func process_upgrade_choice(player: CharacterBody2D):
 	var type = UpgradeType.HEALTH if random_choice == 0 else UpgradeType.STAMINA
 	var sprite_to_show: AnimatedSprite2D = health_sprite
 	
+	var text = ""
+	var color = Color.WHITE
+	
 	if type == UpgradeType.HEALTH:
 		if player.has_method("upgrade_max_health"):
 			player.upgrade_max_health(bonus)
 			sprite_to_show = health_sprite
+			text = "+" + str(bonus) + " HP"
+			color = Color(1, 0.2, 0.2) # Redish
 			
 	elif type == UpgradeType.STAMINA:
 		if player.has_method("upgrade_max_stamina"):
 			player.upgrade_max_stamina(bonus)
 			sprite_to_show = stamina_sprite
+			text = "+" + str(bonus) + " STAMINA"
+			color = Color(0.2, 0.2, 1) # Blueish
 
+	spawn_floating_text(text, color)
 	play_pickup_effect(sprite_to_show)
+
+func spawn_floating_text(text: String, color: Color):
+	var float_text = floating_text_scene.instantiate()
+	get_tree().current_scene.add_child(float_text)
+	float_text.global_position = global_position
+	float_text.start(text, color)
 
 func play_pickup_effect(sprite_to_show: AnimatedSprite2D): # Tried to do effect here!
 	sprite_to_show.visible = true

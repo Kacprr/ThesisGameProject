@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
-const speed = 80
+const speed = 70
 const PATROL_BOUNCE_FORCE = -100.0
 const BOUNCE_FORCE = -1000.0
 const KNOCKBACK_DECEL = 500
 
 # Respawn var
 var initial_position: Vector2
-const RESPAWN_TIME: float = 5.0 #seconds
+const RESPAWN_TIME: float = 10.0 #seconds
 
 @export var health: int = 5
 @export var attack_cooldown = 0.5
