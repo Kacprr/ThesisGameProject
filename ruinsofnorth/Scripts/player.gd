@@ -10,6 +10,7 @@ var can_attack = true
 var is_dead = false
 var is_invulnerable = false
 var has_air_dashed: bool = false
+var has_jumped: bool = false # Tracks if the player has performed a jump since leaving ground
 
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 var direction_var = 0
@@ -23,6 +24,9 @@ const HEALING_EFFECT_SCENE = preload("res://Scenes/healing_effect.tscn")
 const WALL_SLIDE_SPEED = 30.0
 const WALL_CLING_COST_PER_SEC = 20.0
 const WALL_JUMP_FORCE = 300.0 # Horizontal force for wall jump
+
+var coyote_time = 0.15 # seconds
+var coyote_time_counter = 0.0
 
 var max_stamina = 100
 var current_stamina: float = max_stamina
@@ -125,6 +129,7 @@ func _physics_process(_delta: float) -> void:
 				current_State = PlayerState.JUMP
 				current_stamina -= 10
 				jump_sound.play()
+				has_jumped = true
 			animated_sprite.flip_h = (direction_x < 0)
 		else:
 			current_State = PlayerState.JUMP # Fall if stamina is zero
@@ -160,19 +165,32 @@ func _physics_process(_delta: float) -> void:
 	
 	# Horizontal Movement Application (Only if NOT DASHING or CLINGING)
 	if current_State != PlayerState.DASH and current_State != PlayerState.WALL_CLING:
-		# Handle jump.
+		# Update Coyote Time
 		if is_on_floor():
+			coyote_time_counter = coyote_time
+			has_jumped = false
+		else:
+			coyote_time_counter -= _delta
+
+		# Handle jump.
+		if is_on_floor() or coyote_time_counter > 0:
 			if Input.is_action_just_pressed("jump"):
 				current_State = PlayerState.JUMP
 				velocity.y = JUMP_VELOCITY
 				jump_sound.play()
+				coyote_time_counter = 0 # Prevent multi-jumping within coyote time
+				has_jumped = true
 
 		# Handle double-jump
 		elif Input.is_action_just_pressed("jump") and jumps_left > 0:
 			current_State = PlayerState.JUMP
 			velocity.y = JUMP_VELOCITY
-			jumps_left -= 1  #Decrement the counter!
 			jump_sound.play()
+			
+			if has_jumped:
+				jumps_left -= 1  #Decrement the counter if we already jumped
+			else:
+				has_jumped = true # Mark as jumped, but don't consume the extra jump (Fall forgiveness)
 
 	# Handle short jump
 		else:

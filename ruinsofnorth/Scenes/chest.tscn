@@ -1,15 +1,45 @@
-[gd_scene load_steps=3 format=3 uid="uid://5xl8rn7clshw"]
+[gd_scene load_steps=6 format=3 uid="uid://5xl8rn7clshw"]
 
 [ext_resource type="Script" uid="uid://gakmqo64t174" path="res://Scripts/chest.gd" id="1_cjfl1"]
-[ext_resource type="Texture2D" uid="uid://cxyyug6eecy0k" path="res://Assets/sprites/chest.png" id="2_bagqn"]
+[ext_resource type="Texture2D" uid="uid://yrfb0qgaxkgj" path="res://Assets/tile_layers/Dungeon Tile Set/Dungeon Tile Set.png" id="2_cjfl1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bagqn"]
+atlas = ExtResource("2_cjfl1")
+region = Rect2(192, 140, 16, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmguq"]
+atlas = ExtResource("2_cjfl1")
+region = Rect2(208, 140, 16, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dq33m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bagqn")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmguq")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
 
 [node name="Chest" type="Area2D"]
 script = ExtResource("1_cjfl1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_bagqn")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dq33m")
+animation = &"closed"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
+position = Vector2(0, -0.38571453)
+scale = Vector2(1, 0.94642854)
+polygon = PackedVector2Array(-8, -3, 8, -3, 8, 11, -8, 11)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

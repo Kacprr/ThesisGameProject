@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://do5erfql5b2fe"]
 
 [ext_resource type="Script" path="res://Scripts/floating_text.gd" id="1_ftxt"]
-[ext_resource type="FontFile" uid="uid://4v5h0p2x4j0" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_font"]
+[ext_resource type="FontFile" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_font"]
 
 [node name="FloatingText" type="Node2D"]
 script = ExtResource("1_ftxt")
