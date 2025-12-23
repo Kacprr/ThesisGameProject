@@ -1097,7 +1097,7 @@ script = ExtResource("6_85qyi")
 target_dimension = 1
 
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
-position = Vector2(-1093, 77)
+position = Vector2(-1094, 80)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(3, 3)
@@ -1109,7 +1109,7 @@ position = Vector2(49, 287)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Killzone"]
 position = Vector2(0, 10)
-polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3213, 120, 3526, 3, 4947, 2, 5327, -242, 5920, -239, 5920, -266, 5326, -266, 5039, -248, 4946, -20, 3533, -18, 3533, -41, 3213, -41, 3213, 41, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
+polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3213, 120, 3526, 3, 4947, 2, 5327, -242, 7268, -246, 8005, -254, 8005, -297, 7310, -297, 7268, -269, 5326, -266, 5038, -265, 4946, -20, 3533, -18, 3533, -41, 3213, -41, 3213, 41, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
 
 [node name="Coins" type="Node" parent="."]
 
@@ -1164,7 +1164,7 @@ position = Vector2(-656, 80)
 [node name="Traps" type="Node" parent="."]
 
 [node name="KnightTrap" parent="Traps" instance=ExtResource("11_o5yvi")]
-position = Vector2(-241, 48)
+position = Vector2(7605, -48)
 scale = Vector2(0.8, 0.8)
 collision_layer = 2
 collision_mask = 9
