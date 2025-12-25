@@ -1,9 +1,9 @@
 [gd_scene load_steps=17 format=3 uid="uid://dhshsl0xesi0t"]
 
 [ext_resource type="Script" uid="uid://mcjdohclshao" path="res://Scripts/stat_collectible.gd" id="1_4nij7"]
-[ext_resource type="Texture2D" uid="uid://dwd8qw1qbpu6y" path="res://Assets/sprites/heart_pickup.png" id="2_f5u5s"]
+[ext_resource type="Texture2D" path="res://Assets/sprites/heart_pickup.png" id="2_f5u5s"]
 [ext_resource type="AudioStream" uid="uid://dk2dgbm4sstw" path="res://Assets/sounds/power_up.wav" id="2_x51r8"]
-[ext_resource type="Texture2D" uid="uid://bfc14s5w6w44k" path="res://Assets/sprites/Stamina_pickup.png" id="3_ddqna"]
+[ext_resource type="Texture2D" path="res://Assets/sprites/Stamina_pickup.png" id="3_ddqna"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ddqna"]
 atlas = ExtResource("2_f5u5s")

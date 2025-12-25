@@ -28,9 +28,11 @@ func _on_resume_button_pressed():
 	resume_game()
 
 func _on_options_button_pressed():
-	get_tree().change_scene_to_file("res://Scenes/options_menu.tscn")
-	Globals.paused_var = true
-	resume_game()
+	var options_menu = OPTIONS_SCENE.instantiate()
+	options_menu.is_overlay = true
+	add_child(options_menu)
+	$VBoxContainer.visible = false
+	options_menu.tree_exiting.connect(func(): $VBoxContainer.visible = true)
 
 func _on_quit_button_pressed():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

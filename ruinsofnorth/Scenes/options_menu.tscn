@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cei50bin7dbae"]
+[gd_scene load_steps=6 format=3 uid="uid://cei50bin7dbae"]
 
 [ext_resource type="Script" uid="uid://c0jc5kufqpm86" path="res://Scripts/options_menu.gd" id="1_options_script"]
 [ext_resource type="FontFile" uid="uid://dalj3asj0d324" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_font"]
 [ext_resource type="Texture2D" uid="uid://doo05wkmhoiqg" path="res://Assets/Backgrounds/OptionsMenu.png" id="2_inh3s"]
 [ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="3_font_normal"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0, 0, 0, 0.7)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
@@ -18,160 +25,198 @@ script = ExtResource("1_options_script")
 position = Vector2(640, 360)
 texture = ExtResource("2_inh3s")
 
-[node name="MenuContainer" type="VBoxContainer" parent="."]
+[node name="MenuBackground" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -250.0
-offset_right = 200.0
-offset_bottom = 250.0
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
-[node name="Title" type="Label" parent="MenuContainer"]
+[node name="MenuContainer" type="VBoxContainer" parent="MenuBackground"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="MenuBackground/MenuContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 text = "OPTIONS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AudioSection" type="VBoxContainer" parent="MenuContainer"]
+[node name="TabContainer" type="TabContainer" parent="MenuBackground/MenuContainer"]
 layout_mode = 2
-
-[node name="AudioLabel" type="Label" parent="MenuContainer/AudioSection"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 20
-text = "AUDIO"
+current_tab = 0
 
-[node name="MasterVolumeContainer" type="HBoxContainer" parent="MenuContainer/AudioSection"]
+[node name="Video" type="TabBar" parent="MenuBackground/MenuContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuBackground/MenuContainer/TabContainer/Video"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuBackground/MenuContainer/TabContainer/Video/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="FullscreenContainer" type="HBoxContainer" parent="MenuBackground/MenuContainer/TabContainer/Video/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MasterVolumeLabel" type="Label" parent="MenuContainer/AudioSection/MasterVolumeContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 16
-text = "Master Volume:"
-
-[node name="MasterVolumeSlider" type="HSlider" parent="MenuContainer/AudioSection/MasterVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-value = 100.0
-
-[node name="MasterVolumeValue" type="Label" parent="MenuContainer/AudioSection/MasterVolumeContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 14
-text = "100%"
-
-[node name="MusicVolumeContainer" type="HBoxContainer" parent="MenuContainer/AudioSection"]
-layout_mode = 2
-
-[node name="MusicVolumeLabel" type="Label" parent="MenuContainer/AudioSection/MusicVolumeContainer"]
+[node name="FullscreenLabel" type="Label" parent="MenuBackground/MenuContainer/TabContainer/Video/MarginContainer/VBoxContainer/FullscreenContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 16
-text = "Music Volume:"
-
-[node name="MusicVolumeSlider" type="HSlider" parent="MenuContainer/AudioSection/MusicVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-value = 100.0
-
-[node name="MusicVolumeValue" type="Label" parent="MenuContainer/AudioSection/MusicVolumeContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 14
-text = "100%"
-
-[node name="SFXVolumeContainer" type="HBoxContainer" parent="MenuContainer/AudioSection"]
-layout_mode = 2
-
-[node name="SFXVolumeLabel" type="Label" parent="MenuContainer/AudioSection/SFXVolumeContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 16
-text = "SFX Volume:"
-
-[node name="SFXVolumeSlider" type="HSlider" parent="MenuContainer/AudioSection/SFXVolumeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-value = 100.0
-
-[node name="SFXVolumeValue" type="Label" parent="MenuContainer/AudioSection/SFXVolumeContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 14
-text = "100%"
-
-[node name="GraphicsSection" type="VBoxContainer" parent="MenuContainer"]
-layout_mode = 2
-
-[node name="GraphicsLabel" type="Label" parent="MenuContainer/GraphicsSection"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 20
-text = "GRAPHICS"
-
-[node name="FullscreenContainer" type="HBoxContainer" parent="MenuContainer/GraphicsSection"]
-layout_mode = 2
-
-[node name="FullscreenLabel" type="Label" parent="MenuContainer/GraphicsSection/FullscreenContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 24
 text = "Fullscreen:"
 
-[node name="FullscreenCheckBox" type="CheckBox" parent="MenuContainer/GraphicsSection/FullscreenContainer"]
+[node name="FullscreenCheckBox" type="CheckBox" parent="MenuBackground/MenuContainer/TabContainer/Video/MarginContainer/VBoxContainer/FullscreenContainer"]
 layout_mode = 2
 
-[node name="ControlsSection" type="VBoxContainer" parent="MenuContainer"]
+[node name="Audio" type="TabBar" parent="MenuBackground/MenuContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuBackground/MenuContainer/TabContainer/Audio"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ControlsLabel" type="Label" parent="MenuContainer/ControlsSection"]
+[node name="MasterVolumeLabel" type="Label" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/MasterVolumeContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_fonts/font = ExtResource("2_font")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_font_normal")
+theme_override_font_sizes/font_size = 24
+text = "Master Volume:"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="MasterVolumeValue" type="Label" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/MasterVolumeContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_fonts/font = ExtResource("3_font_normal")
 theme_override_font_sizes/font_size = 20
-text = "CONTROLS"
+text = "100%"
 
-[node name="ControlsText" type="RichTextLabel" parent="MenuContainer/ControlsSection"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-bbcode_enabled = true
-text = "[color=white]Movement:[/color] A/D or Arrow Keys
-[color=white]Jump:[/color] W, Space, or Up Arrow
-[color=white]Dash:[/color] Shift
-[color=white]Attack:[/color] Z
-[color=white]Pause:[/color] Escape"
-fit_content = true
-
-[node name="ButtonContainer" type="HBoxContainer" parent="MenuContainer"]
+[node name="MusicVolumeContainer" type="HBoxContainer" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="MenuContainer/ButtonContainer"]
+[node name="MusicVolumeLabel" type="Label" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/MusicVolumeContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_font_normal")
+theme_override_font_sizes/font_size = 24
+text = "Music Volume:"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/MusicVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="MusicVolumeValue" type="Label" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/MusicVolumeContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_fonts/font = ExtResource("3_font_normal")
+theme_override_font_sizes/font_size = 20
+text = "100%"
+
+[node name="SFXVolumeContainer" type="HBoxContainer" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SFXVolumeLabel" type="Label" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/SFXVolumeContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_font_normal")
+theme_override_font_sizes/font_size = 24
+text = "SFX Volume:"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/SFXVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="SFXVolumeValue" type="Label" parent="MenuBackground/MenuContainer/TabContainer/Audio/MarginContainer/VBoxContainer/SFXVolumeContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_fonts/font = ExtResource("3_font_normal")
+theme_override_font_sizes/font_size = 20
+text = "100%"
+
+[node name="Controls" type="TabBar" parent="MenuBackground/MenuContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuBackground/MenuContainer/TabContainer/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MenuBackground/MenuContainer/TabContainer/Controls/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ActionList" type="VBoxContainer" parent="MenuBackground/MenuContainer/TabContainer/Controls/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="ButtonContainer" type="HBoxContainer" parent="MenuBackground/MenuContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BackButton" type="Button" parent="MenuBackground/MenuContainer/ButtonContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "Back"
 
-[node name="ResetButton" type="Button" parent="MenuContainer/ButtonContainer"]
+[node name="ResetButton" type="Button" parent="MenuBackground/MenuContainer/ButtonContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font_normal")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "Reset to Defaults"

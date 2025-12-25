@@ -23,7 +23,7 @@ var can_attack = true
 
 # Respawn variables
 var initial_position: Vector2
-const RESPAWN_TIME: float = 5.0 #seconds
+const RESPAWN_TIME: float = 10.0 #seconds
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var ray_cast_right: RayCast2D = $RayCastRight
