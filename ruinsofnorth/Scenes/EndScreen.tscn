@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dibxd4eisny6n"]
+
+[ext_resource type="Script" uid="uid://b2m7okrcax3rl" path="res://Scripts/end_screen.gd" id="1_3gukv"]
+[ext_resource type="Texture2D" uid="uid://c8s7tfoffc0pe" path="res://Assets/Backgrounds/EndScreenAllCoinAllRed.png" id="2_jh5rx"]
+[ext_resource type="Texture2D" uid="uid://c6oxwjlg4tb4t" path="res://Assets/Backgrounds/EndScreenAllCoinNoRed.png" id="3_d234m"]
+[ext_resource type="Texture2D" uid="uid://bdvja2fi7xg1r" path="res://Assets/Backgrounds/EndScreenNoCoinNoRed.png" id="4_tslor"]
+
+[node name="EndScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_3gukv")
+
+[node name="EndScreenAllCoinAllRed" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(640, 360)
+texture = ExtResource("2_jh5rx")
+
+[node name="EndScreenAllCoinNoRed" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(640, 360)
+texture = ExtResource("3_d234m")
+
+[node name="EndScreenNoCoinNoRed" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(640, 360)
+texture = ExtResource("4_tslor")
+
+[node name="MenuContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RestartButton" type="Button" parent="MenuContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="ExitButton" type="Button" parent="MenuContainer"]
+layout_mode = 2
+text = "Exit"

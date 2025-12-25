@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c0jc5kufqpm86" path="res://Scripts/options_menu.gd" id="1_options_script"]
 [ext_resource type="FontFile" uid="uid://dalj3asj0d324" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_font"]
-[ext_resource type="Texture2D" uid="uid://doo05wkmhoiqg" path="res://Assets/Backgrounds/MainMenuBG - Copy.png" id="2_inh3s"]
+[ext_resource type="Texture2D" uid="uid://doo05wkmhoiqg" path="res://Assets/Backgrounds/OptionsMenu.png" id="2_inh3s"]
 [ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="3_font_normal"]
 
 [node name="OptionsMenu" type="Control"]

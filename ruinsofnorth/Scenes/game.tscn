@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=29 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://ckaxc6l1xgob3" path="res://Scenes/checkpoint.tscn" id="15_nb51f"]
 [ext_resource type="PackedScene" uid="uid://dwwghtyaijg3s" path="res://Scenes/key.tscn" id="19_7nbq1"]
 [ext_resource type="PackedScene" uid="uid://5xl8rn7clshw" path="res://Scenes/chest.tscn" id="20_exi56"]
+[ext_resource type="PackedScene" uid="uid://32h1133gfak4" path="res://Scenes/End_Flag.tscn" id="21_exi56"]
 
 [sub_resource type="TileSet" id="TileSet_3dryh"]
 physics_layer_0/collision_layer = 8
@@ -1187,5 +1188,9 @@ position = Vector2(-848, 38)
 [node name="Chest" parent="." instance=ExtResource("20_exi56")]
 position = Vector2(-790, 31)
 
+[node name="Flag" parent="." instance=ExtResource("21_exi56")]
+position = Vector2(-904, 32)
+
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]
+[connection signal="player_reached_flag" from="Flag" to="GameManager" method="_on_flag_player_reached_flag"]
