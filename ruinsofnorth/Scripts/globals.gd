@@ -2,6 +2,9 @@ extends Node
 
 var paused_var
 
+var score = 0
+var goal_coin = 1
+
 signal flip_toggled(value)
 
 var flipped = false : set = set_flipped

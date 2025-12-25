@@ -1141,13 +1141,34 @@ position = Vector2(4456, -216)
 [node name="Coin4" parent="Coins" instance=ExtResource("4_3dryh")]
 position = Vector2(4920, -178)
 
+[node name="Coin5" parent="Coins" instance=ExtResource("4_3dryh")]
+position = Vector2(10991, -480)
+
+[node name="Coin6" parent="Coins" instance=ExtResource("4_3dryh")]
+position = Vector2(10991, -394)
+
+[node name="Coin7" parent="Coins" instance=ExtResource("4_3dryh")]
+position = Vector2(8327, -262)
+
+[node name="Coin8" parent="Coins" instance=ExtResource("4_3dryh")]
+position = Vector2(8246, -404)
+
+[node name="Coin9" parent="Coins" instance=ExtResource("4_3dryh")]
+position = Vector2(10020, -517)
+
+[node name="Coin10" parent="Coins" instance=ExtResource("4_3dryh")]
+position = Vector2(7653, -117)
+
+[node name="Coin11" parent="Coins" instance=ExtResource("4_3dryh")]
+position = Vector2(2393, 229)
+
 [node name="Health" type="Node" parent="."]
 
 [node name="HealthPickup" parent="Health" instance=ExtResource("7_h4fw4")]
 position = Vector2(304, 39)
 
 [node name="HealthPickup2" parent="Health" instance=ExtResource("7_h4fw4")]
-position = Vector2(0, 39)
+position = Vector2(-1, 0)
 
 [node name="HealingPowerUp" parent="Health" instance=ExtResource("8_rku1e")]
 position = Vector2(-398, 39)
@@ -1206,7 +1227,7 @@ position = Vector2(1876, 216)
 position = Vector2(1832, 342)
 
 [node name="Flag" parent="." instance=ExtResource("21_exi56")]
-position = Vector2(-904, 32)
+position = Vector2(9061, -387)
 
 [node name="Checkpoint3" parent="." instance=ExtResource("15_nb51f")]
 position = Vector2(5953, -91)
@@ -1217,26 +1238,8 @@ position = Vector2(9112, -375)
 [node name="Chest2" parent="." instance=ExtResource("20_exi56")]
 position = Vector2(7895, -57)
 
-[node name="Coin" parent="." instance=ExtResource("4_3dryh")]
-position = Vector2(7653, -117)
-
 [node name="Key2" parent="." instance=ExtResource("19_7nbq1")]
 position = Vector2(7241, -109)
-
-[node name="Coin2" parent="." instance=ExtResource("4_3dryh")]
-position = Vector2(10991, -480)
-
-[node name="Coin3" parent="." instance=ExtResource("4_3dryh")]
-position = Vector2(10991, -394)
-
-[node name="Coin4" parent="." instance=ExtResource("4_3dryh")]
-position = Vector2(8327, -262)
-
-[node name="Coin5" parent="." instance=ExtResource("4_3dryh")]
-position = Vector2(8246, -404)
-
-[node name="Coin6" parent="." instance=ExtResource("4_3dryh")]
-position = Vector2(10020, -517)
 
 [node name="HealingPowerUp" parent="." instance=ExtResource("8_rku1e")]
 position = Vector2(7480, -337)
@@ -1249,9 +1252,6 @@ position = Vector2(7648, -320)
 
 [node name="SlimePurple" parent="." instance=ExtResource("10_ldgsr")]
 position = Vector2(7725, -321)
-
-[node name="Coin7" parent="." instance=ExtResource("4_3dryh")]
-position = Vector2(2393, 229)
 
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]
