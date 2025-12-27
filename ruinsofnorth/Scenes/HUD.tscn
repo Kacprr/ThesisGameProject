@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://ck3pxjp1rj2is"]
+[gd_scene load_steps=10 format=3 uid="uid://ck3pxjp1rj2is"]
 
 [ext_resource type="Script" uid="uid://n5x6wv4ccpnl" path="res://Scripts/hud.gd" id="1_sd512"]
 [ext_resource type="Texture2D" uid="uid://b476uqstrun2m" path="res://Assets/sprites/star.png" id="2_jo1ms"]
 [ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://c3xark3kl3oep" path="res://Assets/sprites/key.png" id="4_s3jbq"]
 
 [sub_resource type="StyleBoxFlat" id="1"]
 bg_color = Color(0, 0, 0, 0.6)
@@ -142,3 +143,13 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 12
 text = "0"
+
+[node name="KeyIcon" type="TextureRect" parent="UIFrame"]
+visible = false
+layout_mode = 0
+offset_left = 237.0
+offset_top = 28.0
+offset_right = 257.0
+offset_bottom = 48.0
+texture = ExtResource("4_s3jbq")
+expand_mode = 1

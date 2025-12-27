@@ -51,6 +51,7 @@ signal health_changed(health)
 signal stamina_changed(stamina)
 signal max_health_changed(new_max_health)
 signal max_stamina_changed(new_max_stamina)
+signal key_changed(amount)
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_scene = preload("res://scenes/Attack.tscn")
@@ -426,6 +427,7 @@ func toggle_stamina_regen(case, _delta):
 #--Chest Code--
 func add_keys() -> void:
 	keys += 1
+	emit_signal("key_changed", keys)
 	print ("key +1")
 
 func has_keys() -> bool:
@@ -438,4 +440,5 @@ func has_keys() -> bool:
 
 func use_keys() -> void:
 	keys -= 1
+	emit_signal("key_changed", keys)
 	print("key used")

@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var stamina_bar: ProgressBar = $UIFrame/StaminaBar
 @onready var hp_number_label: Label = %HpNumberLabel
 @onready var stamina_number_label: Label = %StaminaNumberLabel
+@onready var key_icon: TextureRect = $UIFrame/KeyIcon
 
 var max_health: int = 100
 var max_stamina: int = 100
@@ -22,6 +23,9 @@ func _ready() -> void:
 	hp_number_label.text = str(max_health)
 	stamina_number_label.text = str(max_stamina)
 	
+	# Set Key Icon Texture
+	key_icon.texture = preload("res://Assets/sprites/key.png")
+	
 	var player = get_node_or_null("../Player")
 	if player:
 		if player.is_connected("health_changed", Callable(self, "_on_player_health_changed")) == false:
@@ -35,6 +39,9 @@ func _ready() -> void:
 			
 		if player.is_connected("max_stamina_changed", Callable(self, "_on_player_max_stamina_changed")) == false:
 			player.connect("max_stamina_changed", Callable(self, "_on_player_max_stamina_changed"))
+			
+		if player.is_connected("key_changed", Callable(self, "_on_player_key_changed")) == false:
+			player.connect("key_changed", Callable(self, "_on_player_key_changed"))
 			
 	if _pending_max_health >= 0:
 		set_max_health(_pending_max_health)
@@ -132,3 +139,9 @@ func update_score(score: int) -> void:
 		_pending_score = score
 		return
 	score_label.text = str(score)
+
+func _on_player_key_changed(amount: int) -> void:
+	if amount > 0:
+		key_icon.visible = true
+	else:
+		key_icon.visible = false

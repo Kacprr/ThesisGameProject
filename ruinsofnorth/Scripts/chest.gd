@@ -1,8 +1,6 @@
 extends Area2D
 
 @onready var stat_collectible = preload("res://Scenes/stat_upgrade_collectible.tscn")
-#"res://Scenes/healing_power_up.tscn"
-#"res://Scenes/stat_upgrade_collectible.tscn"
 @onready var animated_sprite = $AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
