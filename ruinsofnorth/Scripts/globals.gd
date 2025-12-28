@@ -3,7 +3,9 @@ extends Node
 var paused_var
 
 var score = 0
-var goal_coin = 1
+@export var goal_coin = 1
+var red_score = 0
+@export var red_goal = 1
 
 signal flip_toggled(value)
 

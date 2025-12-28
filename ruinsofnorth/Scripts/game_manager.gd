@@ -9,6 +9,7 @@ func _ready() -> void:
 	if Music:
 		Music.play()
 	Globals.score = 0
+	Globals.red_score = 0
 	call_deferred("_init_hud")
 
 func _init_hud() -> void:
@@ -43,6 +44,10 @@ func add_point():
 	var hud := get_node_or_null("../HUD")
 	if hud:
 		hud.update_score(score)
+
+func add_red_coin():
+	Globals.red_score += 1
+	print("red coint +1")
 
 func _on_flag_player_reached_flag() -> void:
 	print("player Reached Flag")
