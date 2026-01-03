@@ -1414,7 +1414,7 @@ position = Vector2(49, 287)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Killzone"]
 position = Vector2(0, 10)
-polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3213, 120, 3526, 3, 4947, 2, 5327, -242, 7268, -246, 16447, -262, 16447, -297, 7310, -297, 7268, -269, 5326, -266, 5038, -265, 4946, -20, 3533, -18, 3533, -41, 3213, -41, 3213, 41, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
+polygon = PackedVector2Array(-3174, 20, -3171, 110, 1629, 104, 3213, 120, 3526, 3, 4947, 2, 5327, -242, 7268, -246, 20198, -251, 20198, -296, 7310, -297, 7268, -269, 5326, -266, 5038, -265, 4946, -20, 3533, -18, 3533, -41, 3213, -41, 3213, 41, 2252, 43, 2053, 68, 1764, 66, 1295, 21, 1294, -103, 829, -104, 830, 22, 462, 23, 463, -152, 59, -154, 59, 22)
 
 [node name="Doors" type="Node" parent="."]
 
@@ -1599,7 +1599,7 @@ position = Vector2(19144, -362)
 [node name="FlipPostProcess" parent="." instance=ExtResource("12_flip")]
 
 [node name="Flag" parent="." instance=ExtResource("21_exi56")]
-position = Vector2(16255, -416)
+position = Vector2(19968, -464)
 
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]

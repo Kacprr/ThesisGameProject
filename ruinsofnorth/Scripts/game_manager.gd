@@ -47,7 +47,7 @@ func add_point():
 
 func add_red_coin():
 	Globals.red_score += 1
-	print("red coint +1")
+	print("red coin +1")
 
 func _on_flag_player_reached_flag() -> void:
 	print("player Reached Flag")

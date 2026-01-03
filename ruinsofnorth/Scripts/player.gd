@@ -428,17 +428,13 @@ func toggle_stamina_regen(case, _delta):
 func add_keys() -> void:
 	keys += 1
 	emit_signal("key_changed", keys)
-	print ("key +1")
 
 func has_keys() -> bool:
 	if keys > 0:
-		print("true")
 		return true
 	else: 
-		print("false")
 		return false
 
 func use_keys() -> void:
 	keys -= 1
 	emit_signal("key_changed", keys)
-	print("key used")
