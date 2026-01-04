@@ -28,7 +28,7 @@ const WALL_JUMP_FORCE = 300.0 # Horizontal force for wall jump
 var coyote_time = 0.15 # seconds
 var coyote_time_counter = 0.0
 
-var max_stamina = 100
+var max_stamina = Globals.max_stamina if Globals else 100
 var current_stamina: float = max_stamina
 var dash_cost = 25
 var stamina_regen = 10.0
@@ -68,6 +68,9 @@ func _ready():
 	attack_cooldown_timer.wait_time = ATTACK_COOLDOWN
 	attack_cooldown_timer.one_shot = true
 	animated_sprite.animation_finished.connect(_on_attack_animation_finished)
+	
+	# Sync with Globals
+	max_health = Globals.max_health
 	
 	health = max_health
 	emit_signal("health_changed", health)
@@ -388,6 +391,7 @@ func stop_heal_over_time():
 func upgrade_max_health(bonus: int):
 	max_health += bonus
 	health = max_health
+	Globals.max_health = max_health # Update Global
 	emit_signal("max_health_changed", max_health)
 	emit_signal("health_changed", health)
 
@@ -395,8 +399,10 @@ func upgrade_max_stamina(bonus: int):
 	var new_max = max_stamina + bonus
 	max_stamina = new_max
 	current_stamina = float(new_max)
+	Globals.max_stamina = max_stamina # Update Global
 	emit_signal("max_stamina_changed", new_max)
 	emit_signal("stamina_changed", current_stamina)
+
 
 func _on_attack_animation_finished():
 	if animated_sprite.animation == "attack":

@@ -19,6 +19,9 @@ func set_flipped(value):
 var current_checkpoint_position = Vector2.ZERO
 var checkpoint_active = false
 
+var max_health = 100
+var max_stamina = 100
+
 func update_checkpoint(pos: Vector2):
 	current_checkpoint_position = pos
 	checkpoint_active = true
@@ -26,3 +29,7 @@ func update_checkpoint(pos: Vector2):
 func reset_checkpoint():
 	checkpoint_active = false
 	current_checkpoint_position = Vector2.ZERO
+
+func reset_stats():
+	max_health = 100
+	max_stamina = 100
