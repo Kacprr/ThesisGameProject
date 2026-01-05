@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxmuyvws5v41q"]
+
+[ext_resource type="Script" uid="uid://h12ky65siupx" path="res://Scripts/credits.gd" id="1_credits"]
+[ext_resource type="FontFile" uid="uid://dalj3asj0d324" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_7xmno"]
+[ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="3_uy3b0"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_credits")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 239.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_7xmno")
+theme_override_font_sizes/font_size = 24
+text = "Credits"
+horizontal_alignment = 1
+
+[node name="Content" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_uy3b0")
+text = "
+Game Design & Programming:
+
+Metin Berent Arısoy
+Kacper Hetman
+
+Art Assets:
+
+Civan Kırmızı
+Bünyamin Yahya Saka
+
+Map Design:
+
+Civan Kırmızı
+
+Thank you for playing!
+
+"
+fit_content = true
+horizontal_alignment = 1

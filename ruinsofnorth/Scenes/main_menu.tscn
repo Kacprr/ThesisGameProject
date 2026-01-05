@@ -45,6 +45,14 @@ theme_override_fonts/font = ExtResource("3_1ehe0")
 theme_override_font_sizes/font_size = 32
 text = "Play"
 
+[node name="CreditsButton" type="Button" parent="MenuContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_1ehe0")
+theme_override_font_sizes/font_size = 32
+text = "Credits"
+
 [node name="OptionsButton" type="Button" parent="MenuContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -62,5 +70,6 @@ theme_override_font_sizes/font_size = 32
 text = "Exit"
 
 [connection signal="pressed" from="MenuContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MenuContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="MenuContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="MenuContainer/ExitButton" to="." method="_on_exit_button_pressed"]

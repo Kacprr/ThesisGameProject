@@ -71,6 +71,9 @@ func _ready():
 	
 	# Sync with Globals
 	max_health = Globals.max_health
+	max_stamina = Globals.max_stamina
+	keys = Globals.current_keys
+	current_stamina = max_stamina
 	
 	health = max_health
 	emit_signal("health_changed", health)
@@ -433,6 +436,7 @@ func toggle_stamina_regen(case, _delta):
 #--Chest Code--
 func add_keys() -> void:
 	keys += 1
+	Globals.current_keys = keys # Sync to Global
 	emit_signal("key_changed", keys)
 
 func has_keys() -> bool:
@@ -443,4 +447,5 @@ func has_keys() -> bool:
 
 func use_keys() -> void:
 	keys -= 1
+	Globals.current_keys = keys # Sync to Global
 	emit_signal("key_changed", keys)

@@ -18,12 +18,22 @@ func _init_hud() -> void:
 		hud.update_score(score)
 		var player := get_node_or_null("../Player")
 		if player:
-			var h = player.get("health")
-			if typeof(h) == TYPE_INT or typeof(h) == TYPE_FLOAT:
-				var ih := int(h)
+			var player_health = player.get("health")
+			if typeof(player_health) == TYPE_INT or typeof(player_health) == TYPE_FLOAT:
+				var player_health_int := int(player_health)
 				if hud.has_method("set_max_health"):
-					hud.set_max_health(ih)
-					hud.update_health(ih)
+					hud.set_max_health(player_health_int)
+					hud.update_health(player_health_int)
+			
+			var player_max_stamina = player.get("max_stamina")
+			var player_current_stamina = player.get("current_stamina")
+			if player_max_stamina != null:
+				var max_stamina_int := int(player_max_stamina)
+				if hud.has_method("set_max_stamina"):
+					hud.set_max_stamina(max_stamina_int)
+			if player_current_stamina != null:
+				if hud.has_method("update_stamina"):
+					hud.update_stamina(float(player_current_stamina))
 					
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel") and not get_tree().paused:
