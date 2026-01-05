@@ -98,7 +98,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="red_coin" type="Area2D"]
+[node name="red_coin" type="Area2D" groups=["Red_Coins"]]
 script = ExtResource("1_xvjft")
 
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
@@ -113,3 +113,4 @@ frame_progress = 0.65419555
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="ready" from="." to="." method="_on_ready"]

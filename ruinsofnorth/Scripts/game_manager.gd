@@ -10,6 +10,8 @@ func _ready() -> void:
 		Music.play()
 	Globals.score = 0
 	Globals.red_score = 0
+	Globals.goal_coin = get_tree().get_nodes_in_group("Coins").size()
+	Globals.red_goal = get_tree().get_nodes_in_group("Red_Coins").size()
 	call_deferred("_init_hud")
 
 func _init_hud() -> void:

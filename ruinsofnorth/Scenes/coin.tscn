@@ -197,7 +197,7 @@ _data = {
 &"pickup": SubResource("Animation_g537i")
 }
 
-[node name="Coin" type="Area2D"]
+[node name="Coin" type="Area2D" groups=["Coins"]]
 collision_layer = 4
 script = ExtResource("1_jgi06")
 
@@ -219,3 +219,4 @@ libraries = {
 }
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="ready" from="." to="." method="_on_ready"]
