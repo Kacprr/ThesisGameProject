@@ -14,9 +14,24 @@ func _ready() -> void:
 	Globals.red_goal = get_tree().get_nodes_in_group("Red_Coins").size()
 	call_deferred("_init_hud")
 
+	if Globals.respawning:
+		score = Globals.coins_to_restore
+		Globals.score = score
+		
+		# Restore Red Score
+		Globals.red_score = Globals.red_coins_to_restore
+		
+		Globals.respawning = false
+		print("Respawned with coins restored: ", score, " Red: ", Globals.red_score)
+
+
 func _init_hud() -> void:
 	var hud := get_node_or_null("../HUD")
 	if hud:
+		hud.update_score(score)
+		if hud.has_method("update_red_score"):
+			hud.update_red_score(Globals.red_score)
+
 		hud.update_score(score)
 		if hud.has_method("update_red_score"):
 			hud.update_red_score(Globals.red_score)
@@ -67,4 +82,4 @@ func add_red_coin():
 
 func _on_flag_player_reached_flag() -> void:
 	print("player Reached Flag")
-	get_tree().change_scene_to_file("res://Scenes/EndScreen.tscn")
+	get_tree().call_deferred("change_scene_to_file", "res://Scenes/EndScreen.tscn")
