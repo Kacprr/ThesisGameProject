@@ -1,10 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://emugttcib416"]
+[gd_scene load_steps=20 format=3 uid="uid://emugttcib416"]
 
 [ext_resource type="Script" uid="uid://w2w2rfg16vt3" path="res://Scripts/red_coin.gd" id="1_xvjft"]
-[ext_resource type="Texture2D" uid="uid://dmhgow7pjjw65" path="res://Assets/sprites/red_coin.png" id="2_em7w6"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_xvjft"]
-radius = 5.0
+[ext_resource type="Texture2D" uid="uid://v30oqsyjuggg" path="res://Assets/sprites/red_coin.png" id="2_em7w6"]
+[ext_resource type="AudioStream" uid="uid://cibs3rw8bjlqg" path="res://Assets/sounds/coin.wav" id="3_em7w6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_78elu"]
 atlas = ExtResource("2_em7w6")
@@ -98,6 +96,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_xvjft"]
+radius = 5.0
+
 [sub_resource type="Animation" id="Animation_xvjft"]
 resource_name = "idle"
 tracks/0/type = "value"
@@ -121,13 +122,18 @@ _data = {
 [node name="red_coin" type="Area2D" groups=["Red_Coins"]]
 script = ExtResource("1_xvjft")
 
-[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_xvjft")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6cfm0")
 animation = &"idle"
 frame_progress = 0.09834878
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xvjft")
+
+[node name="PickupSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_em7w6")
+volume_db = -20.0
+bus = &"SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

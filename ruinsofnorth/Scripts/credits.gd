@@ -27,10 +27,6 @@ func _start_sequence() -> void:
 	# Start just below screen
 	container.position.y = screen_height
 	
-	print("Screen Height: ", screen_height)
-	print("Container Size: ", container.size)
-	print("Container Pos: ", container.position)
-	
 	# Fade In (Background + Text)
 	var fade_tween = create_tween()
 	fade_tween.tween_property(self, "modulate:a", 1.0, fade_time)

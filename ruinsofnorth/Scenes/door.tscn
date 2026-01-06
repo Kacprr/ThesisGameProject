@@ -2,9 +2,49 @@
 
 [ext_resource type="Script" uid="uid://0mmrl76ow6x6" path="res://Scripts/door.gd" id="1_door"]
 [ext_resource type="Texture2D" uid="uid://yrfb0qgaxkgj" path="res://Assets/tile_layers/Dungeon Tile Set/Dungeon Tile Set.png" id="2_tileset"]
+[ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="3_font"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
 size = Vector2(16, 31)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_label_bg"]
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_top = 2.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_floating"]
+font = ExtResource("3_font")
+font_size = 8
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_float"]
+resource_name = "float"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LabelContainer:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-33, -35), Vector2(-33, -38), Vector2(-33, -35)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_float"]
+_data = {
+&"float": SubResource("Animation_float")
+}
 
 [node name="Door" type="Area2D"]
 script = ExtResource("1_door")
@@ -17,3 +57,24 @@ shape = SubResource("RectangleShape2D_door")
 texture = ExtResource("2_tileset")
 region_enabled = true
 region_rect = Rect2(208, 160, 16, 32)
+
+[node name="LabelContainer" type="PanelContainer" parent="."]
+visible = false
+offset_left = -33.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = -19.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_label_bg")
+
+[node name="Label" type="Label" parent="LabelContainer"]
+layout_mode = 2
+text = "Press E"
+label_settings = SubResource("LabelSettings_floating")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_float")
+}
+autoplay = "float"

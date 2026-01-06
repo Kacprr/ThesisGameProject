@@ -4,6 +4,9 @@ extends CanvasLayer
 @onready var score_label: Label = $UIFrame/ScoreContainer/ScoreLabel
 @onready var stamina_bar: ProgressBar = $UIFrame/StaminaBar
 @onready var hp_number_label: Label = %HpNumberLabel
+@onready var red_score_label: Label = $UIFrame/RedScoreContainer/RedScoreLabel
+@onready var coin_icon: TextureRect = $UIFrame/ScoreContainer/CoinIcon
+@onready var red_coin_icon: TextureRect = $UIFrame/RedScoreContainer/RedCoinIcon
 @onready var stamina_number_label: Label = %StaminaNumberLabel
 @onready var key_icon: TextureRect = $UIFrame/KeyIcon
 
@@ -12,6 +15,7 @@ var max_stamina: int = 100
 var _health_tween: Tween
 var _stamina_tween: Tween
 var _pending_score: int = -1
+var _pending_red_score: int = -1
 var _pending_health: int = -1
 var _pending_max_health: int = -1
 var _is_quitting: bool = false
@@ -58,6 +62,10 @@ func _ready() -> void:
 	if _pending_score >= 0:
 		score_label.text = str(_pending_score)
 		_pending_score = -1
+		
+	if _pending_red_score >= 0:
+		red_score_label.text = str(_pending_red_score)
+		_pending_red_score = -1
 
 func _exit_tree() -> void:
 	_is_quitting = true
@@ -139,6 +147,14 @@ func update_score(score: int) -> void:
 		_pending_score = score
 		return
 	score_label.text = str(score)
+
+func update_red_score(score: int) -> void:
+	if _is_quitting:
+		return
+	if not is_inside_tree() or red_score_label == null:
+		_pending_red_score = score
+		return
+	red_score_label.text = str(score)
 
 func _on_player_key_changed(amount: int) -> void:
 	if amount > 0:

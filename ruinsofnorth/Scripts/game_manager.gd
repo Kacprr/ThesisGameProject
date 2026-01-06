@@ -18,6 +18,8 @@ func _init_hud() -> void:
 	var hud := get_node_or_null("../HUD")
 	if hud:
 		hud.update_score(score)
+		if hud.has_method("update_red_score"):
+			hud.update_red_score(Globals.red_score)
 		var player := get_node_or_null("../Player")
 		if player:
 			var player_health = player.get("health")
@@ -59,7 +61,9 @@ func add_point():
 
 func add_red_coin():
 	Globals.red_score += 1
-	print("red coin +1")
+	var hud := get_node_or_null("../HUD")
+	if hud:
+		hud.update_red_score(Globals.red_score)
 
 func _on_flag_player_reached_flag() -> void:
 	print("player Reached Flag")

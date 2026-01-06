@@ -23,7 +23,6 @@ func _ready():
 	# 1. Hide the visual elements
 	health_area.visible = false
 	stamina_area.visible = false
-	print("powerup spawn")
 
 func activate_loot():
 	var player = get_tree().get_first_node_in_group("Player")

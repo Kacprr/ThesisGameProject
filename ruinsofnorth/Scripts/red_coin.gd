@@ -4,6 +4,10 @@ extends Area2D
 
 func _on_body_entered(body: Node2D) -> void:
 	game_manager.add_red_coin()
+	$PickupSound.play()
+	$CollisionPolygon2D.set_deferred("disabled", true)
+	$AnimatedSprite2D.visible = false
+	await $PickupSound.finished
 	queue_free()
 
 

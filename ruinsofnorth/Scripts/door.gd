@@ -6,10 +6,11 @@ extends Area2D
 var player_in_range = false
 var player_body: CharacterBody2D = null
 
+@onready var label_container: PanelContainer = $LabelContainer
+
 func _ready():
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-
 
 var is_teleporting = false
 @export var teleport_delay: float = 0.5
@@ -28,11 +29,13 @@ func _on_body_entered(body):
 	if body.is_in_group("Player"):
 		player_in_range = true
 		player_body = body
+		label_container.visible = true
 
 func _on_body_exited(body):
 	if body.is_in_group("Player"):
 		player_in_range = false
 		player_body = null
+		label_container.visible = false
 
 func teleport_player():
 	if player_body:
