@@ -110,14 +110,15 @@ texture = ExtResource("2_d234m")
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
 offset_left = 486.0
-offset_top = 30.0
+offset_top = 38.0
 offset_right = 794.0
-offset_bottom = 312.0
+offset_bottom = 320.0
 theme_override_colors/font_color = Color(0, 0, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_jh5rx")
 theme_override_font_sizes/font_size = 32
 text = "You shouldn't see this text"
+horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="MenuContainer" type="VBoxContainer" parent="."]
@@ -144,7 +145,8 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("4_d234m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MenuContainer/RedCoinContainer"]
-position = Vector2(159, 12)
+position = Vector2(153, 4)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_jd3tx")
 
 [node name="RestartButton" type="Button" parent="MenuContainer"]

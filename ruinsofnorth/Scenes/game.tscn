@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://dolilhbitaa35"]
+[gd_scene load_steps=38 format=4 uid="uid://dolilhbitaa35"]
 
 [ext_resource type="PackedScene" uid="uid://cqeg14x8abmtp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://cjg6ekw8srfft" path="res://Scripts/game_manager.gd" id="1_v158k"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://5xl8rn7clshw" path="res://Scenes/chest.tscn" id="20_exi56"]
 [ext_resource type="PackedScene" uid="uid://32h1133gfak4" path="res://Scenes/End_Flag.tscn" id="21_exi56"]
 [ext_resource type="PackedScene" uid="uid://digyk77jnknrw" path="res://Scenes/door.tscn" id="22_door"]
+[ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="28_tgy6u"]
 
 [sub_resource type="TileSet" id="TileSet_3dryh"]
 physics_layer_0/collision_layer = 8
@@ -1403,7 +1404,7 @@ script = ExtResource("6_85qyi")
 target_dimension = 1
 
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
-position = Vector2(-1205, 80)
+position = Vector2(-912, 45)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(3, 3)
@@ -1488,6 +1489,7 @@ position = Vector2(13780, -673)
 
 [node name="Coin20" parent="Coins" instance=ExtResource("4_3dryh")]
 position = Vector2(14776, -489)
+scale = Vector2(1.0008395, 1.0039268)
 
 [node name="Coin21" parent="Coins" instance=ExtResource("4_3dryh")]
 position = Vector2(15773, -351)
@@ -1511,7 +1513,8 @@ position = Vector2(19035, -547)
 position = Vector2(19404, -699)
 
 [node name="Coin28" parent="Coins" instance=ExtResource("4_3dryh")]
-position = Vector2(19770, -434)
+position = Vector2(19766.998, -497.99997)
+scale = Vector2(1.0405427, 1.1447384)
 
 [node name="Coin29" parent="Coins" instance=ExtResource("4_3dryh")]
 position = Vector2(20234, -245)
@@ -1565,7 +1568,7 @@ position = Vector2(7694, -134)
 position = Vector2(8128, -219)
 
 [node name="red_coin8" parent="Coins" instance=ExtResource("16_81klo")]
-position = Vector2(11058, -265)
+position = Vector2(11054, -136)
 
 [node name="red_coin9" parent="Coins" instance=ExtResource("16_81klo")]
 position = Vector2(11607, -374)
@@ -1796,6 +1799,60 @@ position = Vector2(19144, -362)
 
 [node name="Flag" parent="." instance=ExtResource("21_exi56")]
 position = Vector2(28565, -1824)
+
+[node name="labels" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="R for zoom" type="Label" parent="labels"]
+layout_mode = 0
+offset_left = 19684.0
+offset_top = -677.0
+offset_right = 19782.0
+offset_bottom = -603.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("28_tgy6u")
+theme_override_font_sizes/font_size = 8
+text = "in this Riddle, the guide is the letter"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="dash directions" type="Label" parent="labels"]
+layout_mode = 0
+offset_left = 4063.0
+offset_top = 74.0
+offset_right = 4177.0
+offset_bottom = 149.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("28_tgy6u")
+theme_override_font_sizes/font_size = 8
+text = "Your DASH 
+has WINGS 
+and can SOAR 
+in ALL DIRECTIONS"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="flip" type="Label" parent="labels"]
+layout_mode = 0
+offset_left = 4661.0
+offset_top = -176.0
+offset_right = 4757.0
+offset_bottom = -130.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("28_tgy6u")
+theme_override_font_sizes/font_size = 8
+text = "the X-ray will guide you down the RIGHT path"
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [connection signal="health_changed" from="Player" to="GameManager" method="_on_player_health_changed"]
 [connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]
