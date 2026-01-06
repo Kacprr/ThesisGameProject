@@ -15,19 +15,16 @@ func _on_ready() -> void:
 	$MenuContainer/RedCoinContainer/RedCount.text = str(red_count)
 	$MenuContainer/RedCoinContainer/RedTotal.text = str(red_goal)
 	#make sure all end screens are hidden
-	$EndScreenAllCoinAllRed.hide()
-	$EndScreenNoCoinNoRed.hide()
-	$EndScreenAllCoinNoRed.hide()
-	$EndScreenNoCoinAllRed.hide()
+
 	#reveal sceens based on coin goal conditions
 	if coin_goal_reached and red_goal_reached:
-		$EndScreenAllCoinAllRed.show()
+		$Title.text = "You have collected ALL COINS"
 	elif coin_goal_reached and !(red_goal_reached):
-		$EndScreenAllCoinNoRed.show()
+		$Title.text = "You have colleced all gold coins"
 	elif !(coin_goal_reached) and red_goal_reached:
-		$EndScreenNoCoinAllRed.show()
+		$Title.text = "You have collected all red coins"
 	else:
-		$EndScreenNoCoinNoRed.show()
+		$Title.text = "you didn't collect all coins"
 #handle buttons on screen
 func _on_restart_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/game.tscn")

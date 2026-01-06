@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://emugttcib416"]
+[gd_scene load_steps=19 format=3 uid="uid://emugttcib416"]
 
 [ext_resource type="Script" uid="uid://w2w2rfg16vt3" path="res://Scripts/red_coin.gd" id="1_xvjft"]
 [ext_resource type="Texture2D" uid="uid://dmhgow7pjjw65" path="res://Assets/sprites/red_coin.png" id="2_em7w6"]
@@ -94,9 +94,29 @@ animations = [{
 "texture": SubResource("AtlasTexture_7m25u")
 }],
 "loop": true,
-"name": &"new_animation",
+"name": &"idle",
 "speed": 5.0
 }]
+
+[sub_resource type="Animation" id="Animation_xvjft"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("idle")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_em7w6"]
+_data = {
+&"idle": SubResource("Animation_xvjft")
+}
 
 [node name="red_coin" type="Area2D" groups=["Red_Coins"]]
 script = ExtResource("1_xvjft")
@@ -106,11 +126,13 @@ shape = SubResource("CircleShape2D_xvjft")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6cfm0")
-animation = &"new_animation"
-frame = 5
-frame_progress = 0.65419555
+animation = &"idle"
+frame_progress = 0.09834878
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_em7w6")
+}
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="ready" from="." to="." method="_on_ready"]

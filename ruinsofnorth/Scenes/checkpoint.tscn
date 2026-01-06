@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckaxc6l1xgob3"]
+[gd_scene load_steps=11 format=3 uid="uid://ckaxc6l1xgob3"]
 
 [ext_resource type="Script" uid="uid://osjivxyo13gk" path="res://Scripts/checkpoint.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://tpqp87bkjpd5" path="res://Assets/sprites/Stamina_pickup.png" id="2_2cwi7"]
-[ext_resource type="FontFile" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://bfc14s5w6w44k" path="res://Assets/sprites/Stamina_pickup.png" id="2_2cwi7"]
+[ext_resource type="FontFile" uid="uid://dalj3asj0d324" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_font"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2cwi7"]
 radius = 7.0
