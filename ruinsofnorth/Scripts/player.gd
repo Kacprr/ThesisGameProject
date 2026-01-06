@@ -15,6 +15,8 @@ var has_jumped: bool = false # Tracks if the player has performed a jump since l
 var jumps_left: int = 1 # Start with 1 extra jump (for a total of 2)
 var direction_var = 0
 var hot_heal_amount = 0
+var is_zoomed_out: bool = false
+var default_zoom: Vector2 = Vector2.ZERO
 
 const ATTACK_COOLDOWN = 0.3 # cooldown time in sec
 const JUMP_VELOCITY = -250.0 # Nerfed due to new dash feature!
@@ -260,6 +262,19 @@ func _physics_process(_delta: float) -> void:
 			animated_sprite.play("idle")
 		elif current_State == PlayerState.RUN:
 			animated_sprite.play("run")
+
+func _process(delta: float) -> void:
+	var cam = get_viewport().get_camera_2d()
+	if cam:
+		if default_zoom == Vector2.ZERO:
+			default_zoom = cam.zoom
+			
+		var target_zoom = default_zoom
+		if Input.is_physical_key_pressed(KEY_R):
+			target_zoom = default_zoom * 0.8
+		
+		# Smoothly interpolate to target zoom
+		cam.zoom = cam.zoom.lerp(target_zoom, 5.0 * delta)
 
 func _unhandled_input(event):
 	if is_dead:

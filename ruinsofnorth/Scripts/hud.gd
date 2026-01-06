@@ -161,3 +161,9 @@ func _on_player_key_changed(amount: int) -> void:
 		key_icon.visible = true
 	else:
 		key_icon.visible = false
+
+func move_ui_for_pause(is_paused: bool) -> void:
+	if not is_inside_tree():
+		return
+	
+	visible = not is_paused

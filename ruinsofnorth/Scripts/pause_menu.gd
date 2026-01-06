@@ -13,9 +13,18 @@ func _ready():
 	options_button.pressed.connect(_on_options_button_pressed)
 	quit_button.pressed.connect(_on_quit_button_pressed)
 	Globals.paused_var = false
+	
+	# Hud visibility
+	var hud = get_tree().current_scene.get_node_or_null("HUD")
+	if hud and hud.has_method("move_ui_for_pause"):
+		hud.move_ui_for_pause(true)
 
 # This is called by pressing the Resume button OR the ESC key.
 func resume_game():
+	var hud = get_tree().current_scene.get_node_or_null("HUD")
+	if hud and hud.has_method("move_ui_for_pause"):
+		hud.move_ui_for_pause(false)
+		
 	get_tree().paused = false
 	queue_free()
 
@@ -35,5 +44,6 @@ func _on_options_button_pressed():
 	options_menu.tree_exiting.connect(func(): $VBoxContainer.visible = true)
 
 func _on_quit_button_pressed():
+	get_tree().paused = false
+	queue_free()
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
-	resume_game()
