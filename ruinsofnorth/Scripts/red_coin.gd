@@ -20,4 +20,3 @@ func _on_ready() -> void:
 		queue_free()
 	add_to_group("Red_Coins")
 	$AnimatedSprite2D.play("idle")
-

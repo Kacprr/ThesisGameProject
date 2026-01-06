@@ -1,103 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://dibxd4eisny6n"]
+[gd_scene load_steps=19 format=3 uid="uid://dibxd4eisny6n"]
 
 [ext_resource type="Script" uid="uid://b2m7okrcax3rl" path="res://Scripts/end_screen.gd" id="1_3gukv"]
 [ext_resource type="Texture2D" uid="uid://br5h2twvhtxcg" path="res://Assets/Backgrounds/EndScreenBG.png" id="2_d234m"]
 [ext_resource type="FontFile" uid="uid://dalj3asj0d324" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_jh5rx"]
 [ext_resource type="FontFile" uid="uid://0fn4even71bp" path="res://Assets/fonts/PixelOperator8.ttf" id="4_d234m"]
-[ext_resource type="Texture2D" uid="uid://qkhwmw2sbcf" path="res://Assets/sprites/coin.png" id="5_d234m"]
 [ext_resource type="Texture2D" uid="uid://dmhgow7pjjw65" path="res://Assets/sprites/red_coin.png" id="6_tslor"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k4q1k"]
-atlas = ExtResource("5_d234m")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ypcfy"]
-atlas = ExtResource("5_d234m")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_51rpj"]
-atlas = ExtResource("5_d234m")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dquld"]
-atlas = ExtResource("5_d234m")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0r6p1"]
-atlas = ExtResource("5_d234m")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5fxa3"]
-atlas = ExtResource("5_d234m")
-region = Rect2(80, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nhi40"]
-atlas = ExtResource("5_d234m")
-region = Rect2(112, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x7p40"]
-atlas = ExtResource("5_d234m")
-region = Rect2(96, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_blag7"]
-atlas = ExtResource("5_d234m")
-region = Rect2(144, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tgewn"]
-atlas = ExtResource("5_d234m")
-region = Rect2(128, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rugff"]
-atlas = ExtResource("5_d234m")
-region = Rect2(160, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fdqp2"]
-atlas = ExtResource("5_d234m")
-region = Rect2(176, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_d35g5"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k4q1k")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ypcfy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_51rpj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dquld")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0r6p1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5fxa3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nhi40")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x7p40")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_blag7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tgewn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rugff")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fdqp2")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_opiyw"]
 atlas = ExtResource("6_tslor")
@@ -202,16 +109,15 @@ texture = ExtResource("2_d234m")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
-offset_left = 510.0
-offset_top = 54.0
-offset_right = 766.0
+offset_left = 486.0
+offset_top = 30.0
+offset_right = 794.0
 offset_bottom = 312.0
 theme_override_colors/font_color = Color(0, 0, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_jh5rx")
 theme_override_font_sizes/font_size = 32
-text = "YOU SHOULD NOT SEE THIS TEXT
-"
+text = "You shouldn't see this text"
 autowrap_mode = 3
 
 [node name="MenuContainer" type="VBoxContainer" parent="."]
@@ -220,26 +126,6 @@ offset_left = 562.0
 offset_top = 351.0
 offset_right = 731.0
 offset_bottom = 559.0
-
-[node name="CoinContainer" type="HBoxContainer" parent="MenuContainer"]
-layout_mode = 2
-
-[node name="CoinCount" type="Label" parent="MenuContainer/CoinContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_d234m")
-
-[node name="Label" type="Label" parent="MenuContainer/CoinContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_d234m")
-text = "/"
-
-[node name="CoinTotal" type="Label" parent="MenuContainer/CoinContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_d234m")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MenuContainer/CoinContainer"]
-position = Vector2(159, 11)
-sprite_frames = SubResource("SpriteFrames_d35g5")
 
 [node name="RedCoinContainer" type="HBoxContainer" parent="MenuContainer"]
 layout_mode = 2

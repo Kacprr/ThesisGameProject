@@ -50,4 +50,3 @@ func _on_respawn_button_pressed():
 	get_tree().paused = false
 	queue_free()
 	get_tree().change_scene_to_file(GAME_SCENE)
-
