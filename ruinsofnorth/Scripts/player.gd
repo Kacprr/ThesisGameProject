@@ -414,7 +414,11 @@ func upgrade_max_health(bonus: int):
 	emit_signal("health_changed", health)
 
 func upgrade_max_stamina(bonus: int):
+	var percentage_bonus = ( float(bonus) / max_stamina ) * 100
+	var stamina_percentage_ammount = stamina_regen * percentage_bonus
 	var new_max = max_stamina + bonus
+	var new_regen = stamina_regen + stamina_percentage_ammount
+	stamina_regen = new_regen
 	max_stamina = new_max
 	current_stamina = float(new_max)
 	Globals.max_stamina = max_stamina # Update Global
