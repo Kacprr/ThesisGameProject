@@ -7,6 +7,8 @@ func _ready():
 func _on_play_button_pressed():
 	Globals.reset_checkpoint()
 	Globals.reset_stats()
+	if Music:
+		Music.reset_game_music()
 	get_tree().change_scene_to_file("res://Scenes/game.tscn") #main game scene
 
 func _on_options_button_pressed():

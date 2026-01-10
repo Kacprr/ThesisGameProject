@@ -2,7 +2,7 @@ extends Node
 
 var score = 0
 
-const PAUSE_MENU_SCENE =  preload("res://Scenes/pause_menu.tscn")
+const PAUSE_MENU_SCENE = preload("res://Scenes/pause_menu.tscn")
 const END_SCREEN = preload("res://Scenes/EndScreen.tscn")
 
 func _ready() -> void:

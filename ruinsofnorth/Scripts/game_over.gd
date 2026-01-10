@@ -29,7 +29,9 @@ func _on_play_again_button_pressed():
 	Globals.reset_checkpoint()
 	Globals.reset_stats() # Optional: also reset coins/health/etc for a fresh start
 	Globals.respawning = false
-	
+	if Music:
+		Music.reset_game_music()
+
 	get_tree().paused = false
 	queue_free()
 	
