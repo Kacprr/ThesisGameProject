@@ -1,5 +1,9 @@
 extends Control
 
+func _ready():
+	if Music:
+		Music.play_main_menu_music()
+
 func _on_play_button_pressed():
 	Globals.reset_checkpoint()
 	Globals.reset_stats()

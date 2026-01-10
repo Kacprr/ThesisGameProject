@@ -7,7 +7,7 @@ const END_SCREEN = preload("res://Scenes/EndScreen.tscn")
 
 func _ready() -> void:
 	if Music:
-		Music.play()
+		Music.play_game_music()
 	Globals.score = 0
 	Globals.red_score = 0
 	Globals.goal_coin = get_tree().get_nodes_in_group("Coins").size()

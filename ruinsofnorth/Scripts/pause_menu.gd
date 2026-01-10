@@ -18,9 +18,15 @@ func _ready():
 	var hud = get_tree().current_scene.get_node_or_null("HUD")
 	if hud and hud.has_method("move_ui_for_pause"):
 		hud.move_ui_for_pause(true)
+	
+	if Music:
+		Music.play_pause_music()
 
 # This is called by pressing the Resume button OR the ESC key.
 func resume_game():
+	if Music:
+		Music.play_game_music()
+
 	var hud = get_tree().current_scene.get_node_or_null("HUD")
 	if hud and hud.has_method("move_ui_for_pause"):
 		hud.move_ui_for_pause(false)

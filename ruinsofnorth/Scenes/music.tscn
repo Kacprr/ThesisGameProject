@@ -1,9 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bil6m4gfb1a7h"]
 
-[ext_resource type="AudioStream" uid="uid://b3j8364uad1mk" path="res://Assets/music/time_for_adventure.mp3" id="1_fbmny"]
+[ext_resource type="Script" path="res://Scripts/MusicManager.gd" id="1_manager"]
 
 [node name="Music" type="AudioStreamPlayer"]
-stream = ExtResource("1_fbmny")
-volume_db = -30.0
-autoplay = true
+volume_db = -5.0
 bus = &"Music"
+script = ExtResource("1_manager")
