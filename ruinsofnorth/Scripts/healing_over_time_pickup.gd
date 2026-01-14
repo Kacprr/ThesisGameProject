@@ -1,5 +1,4 @@
 extends Area2D
-class_name HealingPowerup
 
 @export var duration: float = 5.0
 @export var heal_per_second: int = 5

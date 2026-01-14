@@ -2,7 +2,7 @@ extends Area2D
 
 @onready var game_manager: Node = %GameManager
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	if Globals.is_coin_collected(str(get_path())):
 		return
 
