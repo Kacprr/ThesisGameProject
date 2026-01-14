@@ -16,6 +16,11 @@ func _on_ready() -> void:
 		$Title.text = "You Beat The Level\n\nNow Try To Find The Red Coins"
 #handle buttons on screen
 func _on_restart_button_pressed() -> void:
+	Globals.reset_checkpoint()
+	Globals.reset_stats()
+	Globals.respawning = false
+	if Music:
+		Music.reset_game_music()
 	get_tree().change_scene_to_file("res://Scenes/game.tscn")
 func _on_main_menu_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

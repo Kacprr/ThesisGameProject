@@ -1404,7 +1404,7 @@ script = ExtResource("6_85qyi")
 target_dimension = 1
 
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
-position = Vector2(-1209, 79)
+position = Vector2(-1212, 80)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(3, 3)
