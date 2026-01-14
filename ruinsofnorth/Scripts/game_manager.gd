@@ -82,4 +82,4 @@ func add_red_coin():
 
 func _on_flag_player_reached_flag() -> void:
 	print("player Reached Flag")
-	get_tree().call_deferred("change_scene_to_file", "res://Scenes/EndScreen.tscn")
+	get_tree().call_deferred("change_scene_to_file", "res://Scenes/end_menu.tscn")
