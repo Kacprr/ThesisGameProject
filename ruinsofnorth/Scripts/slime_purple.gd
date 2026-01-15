@@ -12,7 +12,6 @@ const RESPAWN_TIME: float = 10.0 #seconds
 @export var health: int = 5
 @export var attack_cooldown = 0.5
 
-
 var max_health = 5
 var direction
 var is_knocked_back = false
@@ -161,7 +160,6 @@ func _on_attack_timer_timeout():
 	else:
 		state = State.IDLE
 		can_attack = true
-
 
 func _on_bounce_area_body_entered(body: Node2D):
 	if body.is_in_group("Player") and body.has_method("apply_vertical_velocity"):

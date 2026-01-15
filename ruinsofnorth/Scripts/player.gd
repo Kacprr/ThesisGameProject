@@ -207,7 +207,6 @@ func _physics_process(_delta: float) -> void:
 				current_State = PlayerState.JUMP
 				velocity.y *= 0.5
 
-
 		# Flip the Sprite
 		if direction > 0:
 			animated_sprite.flip_h = false
@@ -425,7 +424,6 @@ func upgrade_max_stamina(bonus: int):
 	Globals.max_stamina = max_stamina # Update Global
 	emit_signal("max_stamina_changed", new_max)
 	emit_signal("stamina_changed", current_stamina)
-
 
 func _on_attack_animation_finished():
 	if animated_sprite.animation == "attack":

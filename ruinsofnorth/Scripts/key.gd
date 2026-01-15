@@ -14,5 +14,3 @@ func _on_body_entered(body: Node2D) -> void:
 		Globals.register_key_collected(id)
 		body.add_keys()
 		queue_free()
-	else:
-		pass

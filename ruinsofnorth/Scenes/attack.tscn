@@ -42,11 +42,3 @@ sprite_frames = SubResource("SpriteFrames_ds7qa")
 animation = &"new_animation"
 frame = 1
 frame_progress = 0.65958714
-
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-offset_left = -2.0
-offset_top = -6.0
-offset_right = 2.0
-offset_bottom = 6.0
-color = Color(0.824009, 0, 0.160106, 1)

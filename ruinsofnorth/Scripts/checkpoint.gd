@@ -10,7 +10,6 @@ func _ready():
 	if Globals.checkpoint_active and global_position == Globals.current_checkpoint_position:
 		queue_free()
 		return
-
 	# Connect the signal via code to ensure it works even if not linked in editor
 	body_entered.connect(_on_body_entered)
 

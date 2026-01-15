@@ -8,12 +8,12 @@ var player_body: CharacterBody2D = null
 
 @onready var label_container: PanelContainer = $LabelContainer
 
+var is_teleporting = false
+@export var teleport_delay: float = 0.5
+
 func _ready():
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-
-var is_teleporting = false
-@export var teleport_delay: float = 0.5
 
 func _process(_delta):
 	if player_in_range and Input.is_physical_key_pressed(KEY_E) and not is_teleporting:
