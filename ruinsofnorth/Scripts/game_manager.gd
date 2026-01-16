@@ -17,13 +17,9 @@ func _ready() -> void:
 	if Globals.respawning:
 		score = Globals.coins_to_restore
 		Globals.score = score
-		
-		# Restore Red Score
 		Globals.red_score = Globals.red_coins_to_restore
-		
 		Globals.respawning = false
 		print("Respawned with coins restored: ", score, " Red: ", Globals.red_score)
-
 
 func _init_hud() -> void:
 	var hud := get_node_or_null("../HUD")
@@ -31,7 +27,6 @@ func _init_hud() -> void:
 		hud.update_score(score)
 		if hud.has_method("update_red_score"):
 			hud.update_red_score(Globals.red_score)
-
 		hud.update_score(score)
 		if hud.has_method("update_red_score"):
 			hud.update_red_score(Globals.red_score)
@@ -53,7 +48,7 @@ func _init_hud() -> void:
 			if player_current_stamina != null:
 				if hud.has_method("update_stamina"):
 					hud.update_stamina(float(player_current_stamina))
-					
+
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel") and not get_tree().paused:
 		get_tree().paused = true # Pause the game

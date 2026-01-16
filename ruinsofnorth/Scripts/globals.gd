@@ -11,11 +11,6 @@ signal flip_toggled(value)
 
 var flipped = false : set = set_flipped
 
-func set_flipped(value):
-	if flipped != value:
-		flipped = value
-		emit_signal("flip_toggled", flipped)
-
 var current_checkpoint_position = Vector2.ZERO
 var checkpoint_active = false
 
@@ -26,6 +21,16 @@ var respawning = false
 var coins_to_restore = 0
 var red_coins_to_restore = 0
 
+var current_keys = 0
+var opened_chests = []
+var collected_keys = []
+var collected_coins = []
+
+func set_flipped(value):
+	if flipped != value:
+		flipped = value
+		emit_signal("flip_toggled", flipped)
+
 func update_checkpoint(pos: Vector2):
 	current_checkpoint_position = pos
 	checkpoint_active = true
@@ -33,12 +38,6 @@ func update_checkpoint(pos: Vector2):
 func reset_checkpoint():
 	checkpoint_active = false
 	current_checkpoint_position = Vector2.ZERO
-
-# Persistence
-var current_keys = 0
-var opened_chests = []
-var collected_keys = []
-var collected_coins = []
 
 func is_chest_opened(id: String) -> bool:
 	return id in opened_chests
