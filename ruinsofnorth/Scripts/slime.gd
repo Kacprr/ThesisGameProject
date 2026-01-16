@@ -12,7 +12,6 @@ var direction
 var is_knocked_back = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-# State enumeration
 enum State {
 	IDLE,
 	ATTACKING
@@ -21,7 +20,6 @@ enum State {
 var state = State.IDLE
 var can_attack = true
 
-# Respawn variables
 var initial_position: Vector2
 const RESPAWN_TIME: float = 10.0 #seconds
 
@@ -32,7 +30,6 @@ const RESPAWN_TIME: float = 10.0 #seconds
 @onready var attack_timer: Timer = $AttackTimer
 @onready var respawn_timer: Timer = $RespawnTimer
 @onready var explosion_sound: AudioStreamPlayer2D = $ExplosionSound
-
 
 var health_bar: HealthBar
 
@@ -108,7 +105,7 @@ func take_damage(amount, knockback_vector: Vector2 = Vector2.ZERO):
 		
 	if health <= 0:
 		die_and_respawn() # Updated by new function
-		
+
 func die_and_respawn():
 	set_physics_process(false)
 	
@@ -157,7 +154,6 @@ func _on_attack_timer_timeout():
 	else:
 		state = State.IDLE
 		can_attack = true
-
 
 func _on_bounce_area_body_entered(body: Node2D):
 	if body.is_in_group("Player") and body.has_method("apply_vertical_velocity"):

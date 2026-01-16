@@ -17,6 +17,9 @@ func _ready():
 	await get_tree().create_timer(0.4).timeout
 	queue_free()
 
+func set_flip():
+	scale.x = -1
+
 func _on_body_entered(body: Node2D) -> void:
 	if body == null:
 		return
@@ -38,6 +41,3 @@ func _on_body_entered(body: Node2D) -> void:
 				await get_tree().create_timer(_hit_cooldown).timeout
 			
 			_recent_hits.erase(body)
-
-func set_flip():
-	scale.x = -1

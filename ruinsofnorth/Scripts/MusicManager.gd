@@ -69,7 +69,5 @@ func _on_finished():
 func reset_game_music():
 	current_track_index = 0
 	game_music_position = 0.0
-	# Should we stop playback? Usually 'play_game_music' will be called soon after manually.
-	# But if we want to ensure it starts fresh:
 	stop()
 	stream = null 

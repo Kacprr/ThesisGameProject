@@ -13,4 +13,5 @@ func _on_flip_toggled(is_flipped):
 	var target_val = 1.0 if is_flipped else 0.0
 	if color_rect.material:
 		var tween = get_tree().create_tween()
-		tween.tween_property(color_rect.material, "shader_parameter/mix_amount", target_val, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween.tween_property(color_rect.material, "shader_parameter/mix_amount"
+		, target_val, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)

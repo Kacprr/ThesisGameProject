@@ -27,7 +27,7 @@ func _on_body_entered(body: Node2D):
 		if body.has_method("take_damage"):
 			var knockback_direction = (body.global_position - global_position).normalized() * knockback_power
 			body.take_damage(damage_amount, knockback_direction)
-			
+
 func deactivate_trap():
 	isActive = false
 	if collision_shape:

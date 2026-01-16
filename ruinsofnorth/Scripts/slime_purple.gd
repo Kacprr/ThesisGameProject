@@ -90,7 +90,7 @@ func _physics_process(delta):
 		animated_sprite.play("attack")
 		
 	move_and_slide()
-	
+
 func _on_damage_area_body_entered(body):
 	if body.is_in_group("Player") and can_attack:
 		if body.has_method("take_damage"):
@@ -155,7 +155,7 @@ func _on_attack_timer_timeout():
 			break
 	if player_in_range:
 		if player_node.has_method("take_damage"):
-			player_node.take_damage(1)
+			player_node.take_damage(10)
 			attack_timer.start()
 	else:
 		state = State.IDLE
