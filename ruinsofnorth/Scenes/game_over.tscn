@@ -36,11 +36,11 @@ theme_override_font_sizes/font_size = 48
 text = "YOU DIED"
 horizontal_alignment = 1
 
-[node name="PlayAgainButton" type="Button" parent="VBoxContainer"]
+[node name="NewGame" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_14u15")
 theme_override_font_sizes/font_size = 24
-text = "Play Again"
+text = "New Game"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -48,5 +48,5 @@ theme_override_fonts/font = ExtResource("3_14u15")
 theme_override_font_sizes/font_size = 24
 text = "Quit"
 
-[connection signal="pressed" from="VBoxContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
