@@ -27,9 +27,7 @@ func _init_hud() -> void:
 		hud.update_score(score)
 		if hud.has_method("update_red_score"):
 			hud.update_red_score(Globals.red_score)
-		hud.update_score(score)
-		if hud.has_method("update_red_score"):
-			hud.update_red_score(Globals.red_score)
+			
 		var player := get_node_or_null("../Player")
 		if player:
 			var player_health = player.get("health")
