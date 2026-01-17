@@ -299,13 +299,6 @@ func spawn_attack():
 	attack.global_position = global_position + offset
 	get_tree().current_scene.add_child(attack)
 
-func _on_attack_cooldown_timer_timeout():
-	can_attack = true
-
-func _on_dash_timer_timeout() -> void:
-	current_State = PlayerState.IDLE
-	#After dash is complete reseting speed back to base speed and ending dash
-
 func die():
 	set_process_input(false)
 	set_physics_process(false)
@@ -428,6 +421,12 @@ func upgrade_max_stamina(bonus: int):
 func _on_attack_animation_finished():
 	if animated_sprite.animation == "attack":
 		current_State = PlayerState.IDLE
+
+func _on_attack_cooldown_timer_timeout():
+	can_attack = true
+
+func _on_dash_timer_timeout() -> void:
+	current_State = PlayerState.IDLE
 
 func _on_hot_tick_timer_timeout() -> void:
 	if is_healing_over_time:
