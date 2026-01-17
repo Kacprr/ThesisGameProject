@@ -413,7 +413,6 @@ func upgrade_max_stamina(bonus: int):
 	stamina_regen = new_regen
 	max_stamina = new_max
 	current_stamina = float(new_max)
-	print(stamina_regen)
 	Globals.max_stamina = max_stamina # Update Global
 	emit_signal("max_stamina_changed", new_max)
 	emit_signal("stamina_changed", current_stamina)
