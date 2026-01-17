@@ -1,3 +1,5 @@
 /ruinsofnorth/.godot
 *.import
 *.import
+*.exe
+*.zip
