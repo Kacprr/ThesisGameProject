@@ -27,7 +27,6 @@ func _ready() -> void:
 	hp_number_label.text = str(max_health)
 	stamina_number_label.text = str(max_stamina)
 	
-	# Set Key Icon Texture
 	key_icon.texture = preload("res://Assets/sprites/key.png")
 	
 	var player = get_node_or_null("../Player")

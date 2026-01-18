@@ -11,7 +11,6 @@ extends Control
 @onready var reset_button: Button = $MenuBackground/MenuContainer/ButtonContainer/ResetButton
 @onready var action_list: VBoxContainer = $MenuBackground/MenuContainer/TabContainer/Controls/MarginContainer/ScrollContainer/ActionList
 
-
 var is_overlay: bool = false
 
 # Audio bus indices
