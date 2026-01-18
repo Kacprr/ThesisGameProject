@@ -19,7 +19,7 @@ func _ready() -> void:
 		Globals.score = score
 		Globals.red_score = Globals.red_coins_to_restore
 		Globals.respawning = false
-		print("Respawned with coins restored: ", score, " Red: ", Globals.red_score)
+		#print("Respawned with coins restored: ", score, " Red: ", Globals.red_score)
 
 func _init_hud() -> void:
 	var hud := get_node_or_null("../HUD")
@@ -74,5 +74,5 @@ func add_red_coin():
 		hud.update_red_score(Globals.red_score)
 
 func _on_flag_player_reached_flag() -> void:
-	print("player Reached Flag")
+	#print("player Reached Flag")
 	get_tree().call_deferred("change_scene_to_file", "res://Scenes/end_menu.tscn")
