@@ -78,7 +78,7 @@ For development purposes, this repository contains the Godot project and its sou
 
 **Metin Berent Arısoy**
 
-Computer Science / Computer Engineering
+Computer Science
 
 ## 📄 License
 
