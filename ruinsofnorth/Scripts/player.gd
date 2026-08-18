@@ -56,8 +56,7 @@ signal max_stamina_changed(new_max_stamina)
 signal key_changed(amount)
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var attack_scene = preload("res://scenes/Attack.tscn")
-
+@onready var attack_scene = preload("res://Scenes/attack.tscn")
 @onready var jump_sound: AudioStreamPlayer2D = $JumpSound
 @onready var dash_sound: AudioStreamPlayer2D = $DashSound
 @onready var hurt_sound: AudioStreamPlayer2D = $HurtSound
