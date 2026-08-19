@@ -1,6 +1,6 @@
 # Ruins of North
 
-**Ruins of North** is a 2D action-platformer developed as my Bachelor's thesis project in Computer Science.
+**Ruins of North** is a 2D action-platformer developed as Bachelor's thesis project in Computer Science.
 
 The game focuses on challenging platforming, responsive movement, and combat. It was developed using **Godot Engine** and features mechanics such as jumping, dashing, attacking, stamina management, health management, and enemy encounters.
 
